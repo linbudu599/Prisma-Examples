@@ -20,15 +20,16 @@
 
 
 
-## Single-CRUD
+## Single-REST-CRUD
 
 - 标量字段scalar fields
 - 语法(类比GraphQL Schema)
+- 字段属性@ 区块属性@@
 - demo
 
 
 
-## 级联-CRUD
+## 级联-GraphQL-CRUD
 
 - 1-1 1-n m-n
 - :information_source: model @relation @relationId
@@ -48,4 +49,4 @@
 
 - BlitzJS & RedwoodJS
 
-  
+- TypeGraphQL  

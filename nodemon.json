@@ -1,0 +1,21 @@
+{
+  "name": "GraphQL-Explorer-Server",
+  "restartable": "r",
+  "delay": "500",
+  "ignore": [
+    ".git",
+    "node_modules/**",
+    "/**/*.test.ts",
+    "/**/*.sql",
+    "/prisma/*"
+  ],
+  "verbose": true,
+  "execMap": {
+    "": "node",
+    "js": "node --harmony",
+    "ts": "ts-node "
+  },
+  "ext": "js json ts db",
+  "watch": ["./**/*.ts"],
+  "legacy-watch": false
+}
