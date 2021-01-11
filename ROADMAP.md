@@ -25,6 +25,11 @@
 - 标量字段scalar fields
 - 语法(类比GraphQL Schema)
 - 字段属性@ 区块属性@@
+  - @id @@id @@unique @@index等
+  - @map @@map
+- 内置函数
+  - cuid uuid等PK
+  - now dbgenerated等
 - demo
 
 

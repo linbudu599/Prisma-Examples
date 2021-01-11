@@ -1,5 +1,5 @@
 {
-  "name": "GraphQL-Explorer-Server",
+  "name": "Prisma2-Explore",
   "restartable": "r",
   "delay": "500",
   "ignore": [
