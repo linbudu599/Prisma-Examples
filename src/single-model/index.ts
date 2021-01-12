@@ -125,4 +125,6 @@ async function convertStatus(status: boolean) {
   const clearRes = await clear();
   console.log("CLEAR_ALL");
   console.log(clearRes);
+
+  await prisma.$disconnect();
 })();

@@ -3,11 +3,14 @@
   "description": "&lt;&lt;Prisma: 下一代ORM, 不仅仅是ORM>> Demo 仓库",
   "version": "1.0.0",
   "scripts": {
-    "build": "npm run compile && npm run gen",
+    "build": "npm run compile && npm run init",
     "compile": "rimraf -rf dist && etsc && node copy.js",
-    "gen": "npm run gen:single && npm run gen:multi",
-    "gen:single": "cd dist/single-model && prisma db push --preview-feature && prisma generate",
-    "gen:multi": "cd dist/multi-models && prisma db push --preview-feature && prisma generate"
+    "init": "npm run init:single && npm run init:multi",
+    "init:single": "cd dist/single-model && prisma db push --preview-feature && prisma generate",
+    "init:multi": "cd dist/multi-models && prisma db push --preview-feature && prisma generate",
+    "invoke": "npm run invoke:single && npm run invoke:multi",
+    "invoke:single": "node dist/single-model/index.js",
+    "invoke:multi": "node dist/multi-models/index.js"
   },
   "repository": {
     "type": "git",

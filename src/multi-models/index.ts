@@ -47,4 +47,6 @@ const prisma = new PrismaClient();
     },
   });
   console.log(tmp);
+
+  await prisma.$disconnect();
 })();
