@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("TODO_DEMO_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+model Todo {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique
+  content   String?
+  // SQLite不支持枚举
+  type      String   @default("FEATURE")
+  finished  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -7,7 +7,8 @@
     "node_modules/**",
     "/**/*.test.ts",
     "/**/*.sql",
-    "/prisma/*"
+    "/prisma/*",
+    "/**/*.graphql"
   ],
   "verbose": true,
   "execMap": {
