@@ -10,7 +10,6 @@ import {
   IsEnum,
   IsString,
   Length,
-  IsNotEmpty,
   IsOptional,
   IsNumber,
   IsPositive,

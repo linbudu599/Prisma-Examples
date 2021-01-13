@@ -77,7 +77,7 @@ export default class TodoResolver {
     return await ctx.prisma.todo.create({
       data: {
         title: params.title,
-        content: params?.content ?? null,
+        content: params?.content,
         type: params?.type ?? ItemType.FEATURE,
         creator: {
           connect: {

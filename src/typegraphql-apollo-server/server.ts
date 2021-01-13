@@ -22,7 +22,7 @@ const schema = buildSchemaSync({
   emitSchemaFile: path.resolve(__dirname, "./graphql/shema.graphql"),
 });
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
   schema,
   introspection: true,
   context: { prisma },
