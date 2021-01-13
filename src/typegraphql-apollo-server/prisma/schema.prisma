@@ -11,13 +11,25 @@ generator client {
   output   = "./client"
 }
 
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String
+  nickName String?
+  todos    Todo[]
+}
+
 model Todo {
-  id        Int      @id @default(autoincrement())
-  title     String   @unique
-  content   String?
+  id       Int     @id @default(autoincrement())
+  title    String  @unique
+  content  String?
   // SQLite不支持枚举
-  type      String   @default("FEATURE")
-  finished  Boolean  @default(false)
+  type     String  @default("FEATURE")
+  finished Boolean @default(false)
+
+  creatorId Int?
+  creator   User? @relation(fields: [creatorId], references: [id])
+
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

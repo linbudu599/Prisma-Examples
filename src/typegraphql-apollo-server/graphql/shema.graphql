@@ -3,6 +3,13 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateTodoInput {
+  content: String
+  title: String!
+  type: String
+  userId: Int!
+}
+
 """Todo Item Type"""
 enum ItemType {
   BUG
@@ -11,8 +18,20 @@ enum ItemType {
   LIFE
 }
 
+type Mutation {
+  CreateTodo(createParams: CreateTodoInput!): TodoItem
+  DeleteTodoById(id: Int!): TodoItem
+  DeleteUserTodos(userId: Int!): TodoItem
+  MutateTodoStatus(id: Int!, status: Boolean!): TodoItem
+  UpdateTodo(createParams: UpdateTodoInput!): TodoItem
+}
+
 type Query {
   QueryAllTodos: [TodoItem!]!
+  QueryAllUsers: [User!]!
+  QueryTodoById(id: Int!): TodoItem
+  QueryTodoByString(str: String!): [TodoItem!]
+  QueryTodoByTypes(type: ItemType!): [TodoItem!]
 }
 
 """
@@ -21,11 +40,25 @@ The javascript `Date` as integer. Type represents date and time as number of mil
 scalar Timestamp
 
 type TodoItem {
-  content: Boolean
+  content: String
   createdAt: Timestamp!
   finished: Boolean!
   id: ID!
   title: String!
-  type: ItemType!
+  type: String!
   updatedAt: Timestamp!
+}
+
+input UpdateTodoInput {
+  content: String
+  id: Int!
+  title: String
+  type: String
+}
+
+type User {
+  id: ID!
+  name: String!
+  nickName: String
+  todos: [TodoItem!]
 }
