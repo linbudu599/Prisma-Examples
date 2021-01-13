@@ -1,0 +1,31 @@
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
+  creatorId
+  creator {
+    ...UserFields
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  nickName
+}
+
+query {
+  QueryAllTodos {
+    ...TodoFields
+  }
+  QueryTodoById(id: 6) {
+    ...TodoFields
+  }
+  QueryTodoByTypes(type: IDEA) {
+    ...TodoFields
+  }
+  QueryTodoByString(str: "Better") {
+    ...TodoFields
+  }
+}

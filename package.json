@@ -10,7 +10,8 @@
     "init:multi": "cd dist/multi-models && prisma db push --preview-feature && prisma generate",
     "invoke": "npm run invoke:single && npm run invoke:multi",
     "invoke:single": "node dist/single-model/index.js",
-    "invoke:multi": "node dist/multi-models/index.js"
+    "invoke:multi": "node dist/multi-models/index.js",
+    "dev": "nodemon src/typegraphql-apollo-server/server.ts"
   },
   "repository": {
     "type": "git",

@@ -10,7 +10,9 @@ export default class UserResolver {
 
   @Query((returns) => [User])
   async QueryAllUsers(@Ctx() ctx: IContext): Promise<User[]> {
-    return await ctx.prisma.user.findMany();
+    return await ctx.prisma.user.findMany({
+      include: { todos: true },
+    });
   }
 
   @Query((returns) => User, { nullable: true })
@@ -22,6 +24,7 @@ export default class UserResolver {
       where: {
         id,
       },
+      include: { todos: true },
     });
   }
 
@@ -34,11 +37,12 @@ export default class UserResolver {
       where: {
         OR: [{ name: { contains: str } }, { nickName: { contains: str } }],
       },
+      include: { todos: true },
     });
   }
 
   @Mutation((returns) => User, { nullable: true })
-  async CreateTodo(
+  async CreateUser(
     @Arg("createParams", (type) => CreateUserInput) params: CreateUserInput,
     @Ctx() ctx: IContext
   ): Promise<User> {
@@ -47,12 +51,13 @@ export default class UserResolver {
         name: params.name,
         nickName: params?.nickName,
       },
+      include: { todos: true },
     });
   }
 
   @Mutation((returns) => User, { nullable: true })
-  async UpdateTodo(
-    @Arg("createParams", (type) => UpdateUserInput) params: UpdateUserInput,
+  async UpdateUser(
+    @Arg("updateParams", (type) => UpdateUserInput) params: UpdateUserInput,
     @Ctx() ctx: IContext
   ): Promise<User> {
     return await ctx.prisma.user.update({
@@ -63,6 +68,7 @@ export default class UserResolver {
         name: params.name,
         nickName: params?.nickName,
       },
+      include: { todos: true },
     });
   }
 

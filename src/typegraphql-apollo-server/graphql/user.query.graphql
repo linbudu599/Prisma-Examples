@@ -1,0 +1,29 @@
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
+}
+
+fragment UserFields on User {
+  id
+  name
+  nickName
+  todos {
+    ...TodoFields
+  }
+}
+
+query {
+  QueryAllUsers {
+    ...UserFields
+  }
+
+  QueryUserById(id: 1) {
+    ...UserFields
+  }
+
+  QueryUserByString(str: "不渡") {
+    ...UserFields
+  }
+}

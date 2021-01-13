@@ -15,6 +15,8 @@ import {
   IsPositive,
 } from "class-validator";
 
+import User from "./User.type";
+
 export enum ItemType {
   LIFE = "LIFE",
   FEATURE = "FEATURE",
@@ -44,6 +46,12 @@ export default class TodoItem {
   @Field()
   // 由于SQLite不支持enum, 如果这里使用enum会导致生成的Prisma Client类型不匹配
   type!: string;
+
+  @Field((type) => User, { nullable: true })
+  creator?: User | null;
+
+  @Field((type) => Int, { nullable: true })
+  creatorId?: number | null;
 
   @Field((type) => Date)
   createdAt!: Date;

@@ -1,0 +1,31 @@
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
+  creatorId
+  creator {
+    ...UserFields
+  }
+}
+
+fragment UserFields on User {
+  id
+  name
+  nickName
+}
+
+mutation {
+  MutateTodoStatus(id: 8, status: true) {
+    ...TodoFields
+  }
+  CreateTodo(createParams: { title: "阿西吧111", userId: 2 }) {
+    ...TodoFields
+  }
+  UpdateTodo(updateParams: { id: 9, title: "芜湖" }) {
+    ...TodoFields
+  }
+  DeleteTodoById(id: 8) {
+    ...TodoFields
+  }
+}

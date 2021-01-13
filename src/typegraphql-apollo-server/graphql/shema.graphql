@@ -3,6 +3,13 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateTodoInput {
+  content: String
+  title: String!
+  type: String
+  userId: Int!
+}
+
 input CreateUserInput {
   name: String!
   nickName: String
@@ -17,12 +24,14 @@ enum ItemType {
 }
 
 type Mutation {
-  CreateTodo(createParams: CreateUserInput!): User
+  CreateTodo(createParams: CreateTodoInput!): TodoItem
+  CreateUser(createParams: CreateUserInput!): User
   DeleteTodoById(id: Int!): TodoItem
   DeleteUser(id: Int!): User
   DeleteUserTodos(userId: Int!): TodoItem
   MutateTodoStatus(id: Int!, status: Boolean!): TodoItem
-  UpdateTodo(createParams: UpdateUserInput!): User
+  UpdateTodo(updateParams: UpdateTodoInput!): TodoItem
+  UpdateUser(updateParams: UpdateUserInput!): User
 }
 
 type Query {
@@ -33,6 +42,7 @@ type Query {
   QueryTodoByTypes(type: ItemType!): [TodoItem!]
   QueryUserById(id: Int!): User
   QueryUserByString(str: String!): [User!]
+  QueryUserTodos(id: Int!): [TodoItem!]
 }
 
 """
@@ -43,11 +53,20 @@ scalar Timestamp
 type TodoItem {
   content: String
   createdAt: Timestamp!
+  creator: User
+  creatorId: Int
   finished: Boolean!
   id: ID!
   title: String!
   type: String!
   updatedAt: Timestamp!
+}
+
+input UpdateTodoInput {
+  content: String
+  id: Int!
+  title: String
+  type: String
 }
 
 input UpdateUserInput {

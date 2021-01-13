@@ -21,7 +21,7 @@ export default class User {
   nickName?: string | null;
 
   @Field((type) => [TodoItem], { nullable: true })
-  todos?: [TodoItem] | null;
+  todos?: TodoItem[] | null;
 }
 
 @InputType()

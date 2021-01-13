@@ -1,0 +1,27 @@
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
+}
+
+fragment UserFields on User {
+  id
+  name
+  nickName
+  todos {
+    ...TodoFields
+  }
+}
+
+mutation {
+  CreateUser(createParams: { name: "穹心" }) {
+    ...UserFields
+  }
+  UpdateUser(updateParams: { id: 1, name: "好家伙" }) {
+    ...UserFields
+  }
+  DeleteUser(id: 1) {
+    ...UserFields
+  }
+}

@@ -14,7 +14,7 @@ export default class TodoResolver {
 
   @Query((returns) => [TodoItem])
   async QueryAllTodos(@Ctx() ctx: IContext): Promise<TodoItem[]> {
-    return await ctx.prisma.todo.findMany();
+    return await ctx.prisma.todo.findMany({ include: { creator: true } });
   }
 
   @Query((returns) => TodoItem, { nullable: true })
@@ -26,6 +26,7 @@ export default class TodoResolver {
       where: {
         id,
       },
+      include: { creator: true },
     });
   }
 
@@ -38,6 +39,7 @@ export default class TodoResolver {
       where: {
         OR: [{ title: { contains: str } }, { content: { contains: str } }],
       },
+      include: { creator: true },
     });
   }
 
@@ -49,6 +51,19 @@ export default class TodoResolver {
     return await ctx.prisma.todo.findMany({
       where: {
         type,
+      },
+      include: { creator: true },
+    });
+  }
+
+  @Query((returns) => [TodoItem], { nullable: true })
+  async QueryUserTodos(
+    @Arg("id", (type) => Int) id: number,
+    @Ctx() ctx: IContext
+  ): Promise<TodoItem[]> {
+    return await ctx.prisma.todo.findMany({
+      where: {
+        creatorId: id,
       },
     });
   }
@@ -66,6 +81,7 @@ export default class TodoResolver {
       data: {
         finished: status,
       },
+      include: { creator: true },
     });
   }
 
@@ -85,12 +101,13 @@ export default class TodoResolver {
           },
         },
       },
+      include: { creator: true },
     });
   }
 
   @Mutation((returns) => TodoItem, { nullable: true })
   async UpdateTodo(
-    @Arg("createParams", (type) => UpdateTodoInput) params: UpdateTodoInput,
+    @Arg("updateParams", (type) => UpdateTodoInput) params: UpdateTodoInput,
     @Ctx() ctx: IContext
   ): Promise<TodoItem> {
     return await ctx.prisma.todo.update({
@@ -102,6 +119,7 @@ export default class TodoResolver {
         content: params?.content,
         type: params?.type,
       },
+      include: { creator: true },
     });
   }
 
