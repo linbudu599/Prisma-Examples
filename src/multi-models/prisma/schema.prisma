@@ -47,13 +47,21 @@ model Profile {
   userId       Int     @unique
 }
 
+model Fragment {
+  id          Int    @id @default(autoincrement())
+  indicator   String
+  belongsTo   User?  @relation(fields: [belongsToId], references: [id])
+  belongsToId Int?
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  age       Int      @default(0)
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  age       Int        @default(0)
   posts     Post[]
   profile   Profile?
-  avaliable Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  fragment  Fragment[]
+  avaliable Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
