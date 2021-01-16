@@ -176,7 +176,7 @@ const prisma = new PrismaClient();
   });
   console.log(connectOrCreateRelations);
 
-  console.log("=== Conditions Query ===");
+  console.log("=== Conditions & Pagination Query ===");
   const conditionsQuery = await prisma.user.findFirst({
     where: {
       name: constName,
@@ -204,12 +204,136 @@ const prisma = new PrismaClient();
   });
   console.log(conditionsQuery);
 
-  console.log("=== Distinct Query ===");
-  const distinctQuery = await prisma.user.findMany({
-    distinct: ["name"],
-    select: { id: true },
+  // console.log("=== Distinct Query ===");
+  // const distinctQuery = await prisma.user.findMany({
+  //   distinct: ["name"],
+  //   select: { id: true },
+  // });
+  // console.log(distinctQuery);
+
+  console.log("=== OneToOne Relation Update ===");
+  const oneToOneUpdate = await prisma.user.update({
+    where: {
+      name: "林不渡",
+    },
+    data: {
+      age: {
+        set: 599,
+      },
+      profile: {
+        // update
+        // upsert
+        // delete
+        // disconnect
+        // create
+        // connect
+        // connectOrCreate
+        // disconnect:true
+        // 没有set
+      },
+    },
+    select: simpleSelectFields,
   });
-  console.log(distinctQuery);
+  console.log(oneToOneUpdate);
+
+  console.log("=== OneToMany Relation Update ===");
+  const oneToMnayUpdate = await prisma.user.update({
+    where: {
+      name: "林不渡",
+    },
+    data: {
+      posts: {
+        // set 与 many, 以及各选项类型
+        // set: [],
+        // updateMany
+        // deleteMany
+        // disconnect: [
+        //   {
+        //     id: 1,
+        //   },
+        // ],
+      },
+    },
+    select: simpleSelectFields,
+  });
+  console.log(oneToMnayUpdate);
+
+  console.log("=== ManyToMany Operation ===");
+  const p1 = await prisma.post.create({
+    data: {
+      title: "P1",
+      author: {
+        connectOrCreate: {
+          where: {
+            name: "U1",
+          },
+          create: {
+            name: "U1",
+          },
+        },
+      },
+    },
+  });
+
+  const p2 = await prisma.post.create({
+    data: {
+      title: "P2",
+      author: {
+        connectOrCreate: {
+          where: {
+            name: "U2",
+          },
+          create: {
+            name: "U2",
+          },
+        },
+      },
+    },
+  });
+
+  const c1 = await prisma.category.create({
+    data: {
+      name: "C1",
+    },
+  });
+
+  const c2 = await prisma.category.create({
+    data: {
+      name: "C2",
+    },
+  });
+
+  async function createCategoriesOnPostsRecord(cId: number, pId: number) {
+    const cpRecord = await prisma.categoriesOnPosts.create({
+      data: {
+        post: {
+          connect: {
+            id: pId,
+          },
+        },
+        category: {
+          connect: {
+            id: cId,
+          },
+        },
+      },
+    });
+    console.log(
+      `Record Create: Post${cpRecord.postId}-Caterogy${cpRecord.categoryId}`
+    );
+  }
+
+  //   where: {
+  //     postId_categoryId: {
+  //       postId: p1.id,
+  //       categoryId:c1.id
+  //   }
+  // },
+
+  await createCategoriesOnPostsRecord(c1.id, p1.id);
+  await createCategoriesOnPostsRecord(c1.id, p2.id);
+  await createCategoriesOnPostsRecord(c2.id, p1.id);
+  await createCategoriesOnPostsRecord(c2.id, p2.id);
 
   await prisma.$disconnect();
 })();
