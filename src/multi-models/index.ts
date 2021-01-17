@@ -258,7 +258,7 @@ const prisma = new PrismaClient();
   });
   console.log(oneToMnayUpdate);
 
-  console.log("=== ManyToMany Operation ===");
+  console.log("=== Explicit ManyToMany Operation ===");
   const p1 = await prisma.post.create({
     data: {
       title: "P1",
@@ -335,5 +335,154 @@ const prisma = new PrismaClient();
   await createCategoriesOnPostsRecord(c2.id, p1.id);
   await createCategoriesOnPostsRecord(c2.id, p2.id);
 
+  console.log("=== Filtering Summary ===");
+
+  console.log("=== Batch Operation Basic Filtering ===");
+  const batchOperation = await prisma.user.findMany({
+    where: {
+      // String Filter
+      name: {
+        // equals: "林不渡",
+        // not: "INEXIST_STR",
+        in: ["林不渡", "林不渡1"],
+        // notIn: [],
+        // lte gt gte
+        // lt: "",
+        contains: "不渡",
+        startsWith: "林",
+        // endsWith:"",
+      },
+      // Int Filter
+      age: {
+        // equal
+        // not
+        // in
+        // notIn
+        // lt lte gt gte
+      },
+      // Boolean Filter
+      avaliable: {
+        equals: true,
+        not: false,
+      },
+    },
+  });
+  console.log(batchOperation);
+
+  console.log("=== Multi Filter Conditions ===");
+  const multiFilterCondition = await prisma.user.findMany({
+    where: {
+      // 通常会被省略掉
+      AND: {
+        avaliable: true,
+      },
+      // 所有均返回false
+      NOT: [],
+      // 其中一组返回true
+      OR: [
+        {
+          profile: {
+            bio: "xxx",
+          },
+        },
+        {
+          age: {
+            gt: 0,
+          },
+        },
+      ],
+    },
+    select: { id: true },
+  });
+  console.log(multiFilterCondition);
+
+  console.log("=== Relation Filter Condition ===");
+
+  const relationFilter = await prisma.category.findMany({
+    where: {
+      posts: {
+        every: {
+          // 所有关联均满足此条件
+          postId: {
+            gte: 1,
+          },
+        },
+        // 在1-n m-n 情况下, 只要一条记录满足此条件
+        some: {
+          postId: {
+            gte: 1,
+          },
+        },
+        // 没有记录满足此条件
+        none: {
+          postId: {
+            lte: 10,
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
+      posts: true,
+    },
+  });
+  console.log(relationFilter);
+
+  console.log("=== Include Filtering ===");
+  // const includeFiltering = await prisma.user.findMany({
+  //   include: {
+  //     Profile: {
+  //       where: {}
+  //     }
+  //   }
+  // })
+
+  // 返回拥有posts未发布的用户 也会包含没有posts的用户
+  const includeFiltering1 = await prisma.user.findMany({
+    include: {
+      posts: {
+        where: {
+          published: false,
+        },
+      },
+    },
+  });
+
+  // 返回至少有一篇未发布文章的用户
+  const includeFiltering2 = await prisma.user.findMany({
+    where: {
+      posts: {
+        some: {
+          published: false,
+        },
+      },
+    },
+    include: {
+      posts: {
+        where: {
+          published: false,
+        },
+      },
+    },
+  });
+
+  console.log("=== Select Filtering ===");
+
+  // 只会返回用户未发布的文章的标题
+  const selectFiltering = await prisma.user.findMany({
+    where: {
+      avaliable: true,
+    },
+    select: {
+      posts: {
+        where: {
+          published: false,
+        },
+        select: {
+          title: true,
+        },
+      },
+    },
+  });
   await prisma.$disconnect();
 })();
