@@ -2,6 +2,7 @@ import { PrismaClient } from "./prisma/client";
 
 const prisma = new PrismaClient();
 
+// middleware
 prisma.$use(async (params, next) => {
   const result = await next(params);
   return result;
@@ -67,16 +68,11 @@ async function deleteTodo(id: number) {
   return res;
 }
 
-async function clear() {
-  const res = await prisma.todo.deleteMany();
-  return res;
-}
-
 async function convertStatus(status: boolean) {
   const res = await prisma.todo.updateMany({
-    // data: {
-    //   finished:status
-    // }
+    where: {
+      finished: !status,
+    },
     data: {
       finished: {
         set: status,
@@ -84,6 +80,11 @@ async function convertStatus(status: boolean) {
     },
   });
 
+  return res;
+}
+
+async function clear() {
+  const res = await prisma.todo.deleteMany();
   return res;
 }
 

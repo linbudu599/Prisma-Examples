@@ -12,13 +12,13 @@
 
 ```bash
 # 安装Prisma CLI
-npm install @prisma/cli @prisma/client -g
-yarn global add @prisma/cli @prisma/client
+npm install prisma @prisma/client -S
 
 # 进入任意一个目录下
 cd single-model # 单表
 cd multi-models # 多表关联
 
+# 需要全局安装prisma
 # 生成sqlite文件
 prisma db push --preview-feature
 
@@ -27,7 +27,23 @@ prisma generate
 
 # 改动Prisma Schema后执行此命令来迁移数据库 并重新执行generate生成Prisma Client
 prisma migrate
+
+# 快速执行示例
+npm run build
+npm run invoke
 ```
+
+## Advanced Multi-Models Example
+
+### Model
+
+### Relation
+
+- `User` -> `Post`: **1-n**
+- `User` -> `Profile`: **1-1** (Optional)
+- `User` -> `Fragment`: **1-n**
+- `Post` -> `Category`: **m-n**(connected by `CategoriesOnPosts` model)
+- Self-Relation `User`
 
 ### with TypeGraphQL + Apollo-Server
 

@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install @prisma/cli @prisma/client -g
+          npm install prisma @prisma/client -g
       - name: Build
         run: npm run build
       - name: Invoke

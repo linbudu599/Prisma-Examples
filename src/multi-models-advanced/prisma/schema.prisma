@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "sqlite"
-  url      = env("MULTI_MODELS_DATABASE_URL")
+  url      = env("ADVANCED_MULTI_MODELS_DATABASE_URL")
 }
 
 generator client {
@@ -11,11 +11,21 @@ generator client {
   output   = "./client"
 }
 
+model CategoriesOnPosts {
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@id([postId, categoryId])
+}
+
 model Category {
   id   Int    @id @default(autoincrement())
   name String
 
-  posts Post[]
+  posts CategoriesOnPosts[]
 }
 
 model Post {
@@ -32,7 +42,7 @@ model Post {
   author   User @relation(fields: [authorId], references: [id])
   authorId Int
 
-  categories Category[]
+  categories CategoriesOnPosts[]
 }
 
 model Profile {
@@ -44,6 +54,14 @@ model Profile {
   userId Int  @unique
 }
 
+model Fragment {
+  id        Int    @id @default(autoincrement())
+  indicator String
+
+  belongsTo   User? @relation(fields: [belongsToId], references: [id])
+  belongsToId Int?
+}
+
 model User {
   id   Int    @id @default(autoincrement())
   name String @unique
@@ -52,6 +70,14 @@ model User {
   posts Post[]
 
   profile Profile?
+
+  fragment Fragment[]
+
+  // user can have 0-1 invitor
+  invitorId Int?
+  invitor   User? @relation("UserInvitor", fields: [invitorId], references: [id])
+
+  invitation User[] @relation("UserInvitor")
 
   avaliable Boolean @default(true)
 
