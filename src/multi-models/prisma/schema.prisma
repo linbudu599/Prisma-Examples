@@ -40,8 +40,8 @@ model Profile {
   bio          String?
   profileViews Int     @default(0)
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int  @unique
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?  @unique
 }
 
 model User {
