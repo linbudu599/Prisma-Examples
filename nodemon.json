@@ -8,7 +8,8 @@
     "/**/*.test.ts",
     "/**/*.sql",
     "/prisma/*",
-    "/**/*.graphql"
+    "/**/*.graphql",
+    "/**/generated/*"
   ],
   "verbose": true,
   "execMap": {

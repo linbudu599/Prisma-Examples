@@ -2,11 +2,6 @@
 
 &lt;&lt;Prisma: 下一代ORM, 不仅仅是ORM>> Demo 仓库
 
-**鸽置**
-
-## 规划
-
-[ROADMAP](./ROADMAP.md)
 
 ## 开始
 
@@ -38,23 +33,21 @@ npm run invoke
 
 ## Advanced Multi-Models Example
 
-### Model
-
 ### Relation
 
 - `User` -> `Post`: **1-n**
 - `User` -> `Profile`: **1-1** (Optional in User, Required in Profile)
 - `User` -> `Fragment`: **1-n** (Optional in User, Optional in Fragment)
-- `Post` -> `Category`: **m-n**(connected by `CategoriesOnPosts` model)
+- `Post` -> `Category`: **m-n**(connected by `CtegoriesOnPosts` model)
 - Self-Relation: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
 
 ### with TypeGraphQL + Apollo-Server
 
 - [Generated Schema](src/typegraphql-apollo-server/graphql/shema.graphql)
+- [Generated TypeScript Code](src/typegraphql-apollo-server/generated/index.ts)
 - [Prisma Model](src/typegraphql-apollo-server/prisma/schema.prisma)
 - [Resolvers](src/typegraphql-apollo-server/resolvers/)
-
 - Explore
-  - `npm run dev` / `yarn dev`
+  - `npm run dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
-  - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)
+  - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)

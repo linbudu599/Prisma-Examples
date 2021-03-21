@@ -1,9 +1,4 @@
-fragment TodoFields on TodoItem {
-  id
-  title
-  content
-  type
-}
+
 
 fragment UserFields on User {
   id
@@ -12,6 +7,13 @@ fragment UserFields on User {
   todos {
     ...TodoFields
   }
+}
+
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
 }
 
 mutation {

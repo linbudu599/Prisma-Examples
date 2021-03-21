@@ -31,7 +31,6 @@ query {
   QueryUserByString(str: "不渡") {
     ...UserFields
   }
-  
   # return null
   QueryUserByString(str: "111不渡") {
     ...UserFields

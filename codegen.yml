@@ -1,0 +1,20 @@
+overwrite: true
+schema: "http://localhost:5999/graphql"
+documents: "src/typegraphql-apollo-server/graphql/operation.graphql"
+generates:
+  src/typegraphql-apollo-server/generated/index.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-resolvers"
+      - "typescript-react-apollo"
+      - "fragment-matcher"
+      - time:
+          message: "The file generated on: "
+          format: YYYY.MM.DD HH:MM:SS a-z
+      - add:
+          placement: "prepend"
+          content: "// Generated GraphQL Schema TypeScript Types"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"

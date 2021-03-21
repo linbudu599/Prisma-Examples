@@ -1,0 +1,64 @@
+fragment TodoFields on TodoItem {
+  id
+  title
+  content
+  type
+  creatorId
+  creator {
+    ...UserFragmentFields
+  }
+}
+
+fragment UserFragmentFields on User {
+  id
+  name
+  nickName
+}
+
+fragment UserFields on User {
+  id
+  name
+  nickName
+  todos {
+    ...TodoFragmentFields
+  }
+}
+
+fragment TodoFragmentFields on TodoItem {
+  id
+  title
+  content
+  type
+}
+
+query QueryOperation($id: Int!, $type: ItemType!, $str: String!) {
+  QueryAllTodos {
+    ...TodoFields
+  }
+  QueryTodoById(id: $id) {
+    ...TodoFields
+  }
+  QueryTodoByTypes(type: $type) {
+    ...TodoFields
+  }
+  QueryTodoByString(str: $str) {
+    ...TodoFields
+  }
+  QueryUserTodos(id: $id) {
+    ...TodoFields
+  }
+
+  QueryAllUsers {
+    ...UserFields
+  }
+
+  QueryUserById(id: $id) {
+    ...UserFields
+  }
+
+  QueryUserByString(str: $str) {
+    ...UserFields
+  }
+
+}
+
