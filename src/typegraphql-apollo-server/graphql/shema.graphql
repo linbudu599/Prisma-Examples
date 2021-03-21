@@ -3,6 +3,10 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type BatchPayload {
+  count: Int!
+}
+
 input CreateTodoInput {
   content: String
   title: String!
@@ -25,24 +29,24 @@ enum ItemType {
 
 type Mutation {
   CreateTodo(createParams: CreateTodoInput!): TodoItem
-  CreateUser(createParams: CreateUserInput!): User
+  CreateUser(createParams: CreateUserInput!): User!
   DeleteTodoById(id: Int!): TodoItem
-  DeleteUser(id: Int!): User
-  DeleteUserTodos(userId: Int!): TodoItem
+  DeleteUser(id: Int!): User!
+  DeleteUserTodos(userId: Int!): BatchPayload!
   MutateTodoStatus(id: Int!, status: Boolean!): TodoItem
   UpdateTodo(updateParams: UpdateTodoInput!): TodoItem
-  UpdateUser(updateParams: UpdateUserInput!): User
+  UpdateUser(updateParams: UpdateUserInput!): User!
 }
 
 type Query {
   QueryAllTodos: [TodoItem!]!
   QueryAllUsers: [User!]!
   QueryTodoById(id: Int!): TodoItem
-  QueryTodoByString(str: String!): [TodoItem!]
-  QueryTodoByTypes(type: ItemType!): [TodoItem!]
+  QueryTodoByString(str: String!): [TodoItem!]!
+  QueryTodoByTypes(type: ItemType!): [TodoItem!]!
   QueryUserById(id: Int!): User
   QueryUserByString(str: String!): [User!]
-  QueryUserTodos(id: Int!): [TodoItem!]
+  QueryUserTodos(id: Int!): [TodoItem!]!
 }
 
 """

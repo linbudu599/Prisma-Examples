@@ -1,7 +1,9 @@
 import "reflect-metadata";
 import path from "path";
+
 import chalk from "chalk";
 import ora from "ora";
+
 import { ApolloServer } from "apollo-server";
 import { buildSchemaSync } from "type-graphql";
 
@@ -32,8 +34,6 @@ export const server = new ApolloServer({
       "editor.reuseHeaders": true,
       "editor.fontSize": 16,
       "editor.fontFamily": `'Fira Code', 'Source Code Pro', 'Consolas'`,
-      "tracing.hideTracingResponse": false,
-      "queryPlan.hideQueryPlanResponse": false,
     },
   },
 });

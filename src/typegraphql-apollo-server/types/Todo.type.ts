@@ -60,6 +60,12 @@ export default class TodoItem {
   updatedAt!: Date;
 }
 
+@ObjectType()
+export class BatchPayload {
+  @Field((type) => Int)
+  count!: number;
+}
+
 @InputType()
 export class CreateTodoInput {
   @Field()

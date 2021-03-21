@@ -28,4 +28,7 @@ query {
   QueryTodoByString(str: "Better") {
     ...TodoFields
   }
+  QueryUserTodos(id: 7) {
+    ...TodoFields
+  }
 }

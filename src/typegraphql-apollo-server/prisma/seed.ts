@@ -1,4 +1,4 @@
-import { PrismaClient } from "./prisma/client";
+import { PrismaClient } from "./client";
 
 const prisma = new PrismaClient();
 
@@ -66,4 +66,6 @@ const prisma = new PrismaClient();
   });
 
   console.log("user2", user2);
+
+  await prisma.$disconnect();
 })();

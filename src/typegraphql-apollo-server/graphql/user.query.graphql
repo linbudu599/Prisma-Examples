@@ -19,11 +19,21 @@ query {
     ...UserFields
   }
 
-  QueryUserById(id: 1) {
+  QueryUserById(id: 2) {
+    ...UserFields
+  }
+
+  # return null
+  QueryUserById(id: 2111) {
     ...UserFields
   }
 
   QueryUserByString(str: "不渡") {
+    ...UserFields
+  }
+  
+  # return null
+  QueryUserByString(str: "111不渡") {
     ...UserFields
   }
 }

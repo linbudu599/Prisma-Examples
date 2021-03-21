@@ -28,4 +28,7 @@ mutation {
   DeleteTodoById(id: 8) {
     ...TodoFields
   }
+  DeleteUserTodos(userId: 11) {
+    count
+  }
 }
