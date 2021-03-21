@@ -16,3 +16,16 @@ fs.copy("./src/multi-models/prisma", "./dist/multi-models/prisma")
   .catch((err) => {
     console.error(err);
   });
+
+fs.copy(
+  "./src/multi-models-advanced/prisma",
+  "./dist/multi-models-advanced/prisma"
+)
+  .then((_) => {
+    console.log(
+      chalk.green("=== Copy Multi-Models-Advanced Prisma Client ===")
+    );
+  })
+  .catch((err) => {
+    console.error(err);
+  });

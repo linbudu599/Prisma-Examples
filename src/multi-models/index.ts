@@ -198,36 +198,5 @@ const randomBio = () => `Bio-${Math.floor(Math.random() * 100000)}`;
   console.log("=== OneToMany Relation Update ===");
   console.log(oneToMnayUpdate);
 
-  const relationFilter = await prisma.category.findMany({
-    where: {
-      posts: {
-        every: {
-          // 所有关联均满足此条件
-          id: {
-            equals: 1,
-          },
-        },
-        // 在1-n m-n 情况下, 只要一条记录满足此条件
-        // some: {
-        //   id: {
-        //     equals: 1,
-        //   },
-        // },
-        // 没有记录满足此条件
-        // none: {
-        //   id: {
-        //     equals: 1,
-        //   },
-        // },
-      },
-    },
-    select: {
-      id: true,
-      posts: true,
-    },
-  });
-  console.log("=== Relation Filter Condition ===");
-  console.log(relationFilter);
-
   await prisma.$disconnect();
 })();

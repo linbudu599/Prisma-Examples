@@ -12,13 +12,16 @@
 
 ```bash
 # 安装Prisma CLI
+# 最新版本@prisma/cli已被弃用，更改为prisma
 npm install prisma @prisma/client -S
 
 # 进入任意一个目录下
 cd single-model # 单表
 cd multi-models # 多表关联
+cd multi-models-advanced # 多表关联下的进阶使用
 
 # 需要全局安装prisma
+
 # 生成sqlite文件
 prisma db push --preview-feature
 
@@ -26,7 +29,7 @@ prisma db push --preview-feature
 prisma generate
 
 # 改动Prisma Schema后执行此命令来迁移数据库 并重新执行generate生成Prisma Client
-prisma migrate
+# prisma migrate
 
 # 快速执行示例
 npm run build
@@ -40,10 +43,10 @@ npm run invoke
 ### Relation
 
 - `User` -> `Post`: **1-n**
-- `User` -> `Profile`: **1-1** (Optional)
-- `User` -> `Fragment`: **1-n**
+- `User` -> `Profile`: **1-1** (Optional in User, Required in Profile)
+- `User` -> `Fragment`: **1-n** (Optional in User, Optional in Fragment)
 - `Post` -> `Category`: **m-n**(connected by `CategoriesOnPosts` model)
-- Self-Relation `User`
+- Self-Relation: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
 
 ### with TypeGraphQL + Apollo-Server
 
