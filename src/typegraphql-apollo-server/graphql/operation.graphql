@@ -15,50 +15,34 @@ fragment UserFragmentFields on User {
   nickName
 }
 
-fragment UserFields on User {
-  id
-  name
-  nickName
-  todos {
-    ...TodoFragmentFields
-  }
-}
 
-fragment TodoFragmentFields on TodoItem {
-  id
-  title
-  content
-  type
-}
-
-query QueryOperation($id: Int!, $type: ItemType!, $str: String!) {
+query QueryAllTodos {
   QueryAllTodos {
     ...TodoFields
   }
+}
+
+
+query QueryTodoById($id: Int!) {
   QueryTodoById(id: $id) {
     ...TodoFields
   }
+}
+
+query QueryTodoByTypes($type: ItemType!) {
   QueryTodoByTypes(type: $type) {
     ...TodoFields
   }
+}
+
+query QueryTodoByString($str: String!) {
   QueryTodoByString(str: $str) {
     ...TodoFields
   }
+}
+
+query QueryUserTodos($id: Int!) {
   QueryUserTodos(id: $id) {
     ...TodoFields
   }
-
-  QueryAllUsers {
-    ...UserFields
-  }
-
-  QueryUserById(id: $id) {
-    ...UserFields
-  }
-
-  QueryUserByString(str: $str) {
-    ...UserFields
-  }
-
 }
-

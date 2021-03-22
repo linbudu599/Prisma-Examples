@@ -188,54 +188,67 @@ export type UserFragmentFieldsFragment = (
   & Pick<User, 'id' | 'name' | 'nickName'>
 );
 
-export type UserFieldsFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'nickName'>
-  & { todos?: Maybe<Array<(
-    { __typename?: 'TodoItem' }
-    & TodoFragmentFieldsFragment
-  )>> }
-);
-
-export type TodoFragmentFieldsFragment = (
-  { __typename?: 'TodoItem' }
-  & Pick<TodoItem, 'id' | 'title' | 'content' | 'type'>
-);
-
-export type QueryOperationQueryVariables = Exact<{
-  id: Scalars['Int'];
-  type: ItemType;
-  str: Scalars['String'];
-}>;
+export type QueryAllTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryOperationQuery = (
+export type QueryAllTodosQuery = (
   { __typename?: 'Query' }
   & { QueryAllTodos: Array<(
     { __typename?: 'TodoItem' }
     & TodoFieldsFragment
-  )>, QueryTodoById?: Maybe<(
+  )> }
+);
+
+export type QueryTodoByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type QueryTodoByIdQuery = (
+  { __typename?: 'Query' }
+  & { QueryTodoById?: Maybe<(
     { __typename?: 'TodoItem' }
     & TodoFieldsFragment
-  )>, QueryTodoByTypes: Array<(
+  )> }
+);
+
+export type QueryTodoByTypesQueryVariables = Exact<{
+  type: ItemType;
+}>;
+
+
+export type QueryTodoByTypesQuery = (
+  { __typename?: 'Query' }
+  & { QueryTodoByTypes: Array<(
     { __typename?: 'TodoItem' }
     & TodoFieldsFragment
-  )>, QueryTodoByString: Array<(
+  )> }
+);
+
+export type QueryTodoByStringQueryVariables = Exact<{
+  str: Scalars['String'];
+}>;
+
+
+export type QueryTodoByStringQuery = (
+  { __typename?: 'Query' }
+  & { QueryTodoByString: Array<(
     { __typename?: 'TodoItem' }
     & TodoFieldsFragment
-  )>, QueryUserTodos: Array<(
+  )> }
+);
+
+export type QueryUserTodosQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type QueryUserTodosQuery = (
+  { __typename?: 'Query' }
+  & { QueryUserTodos: Array<(
     { __typename?: 'TodoItem' }
     & TodoFieldsFragment
-  )>, QueryAllUsers: Array<(
-    { __typename?: 'User' }
-    & UserFieldsFragment
-  )>, QueryUserById?: Maybe<(
-    { __typename?: 'User' }
-    & UserFieldsFragment
-  )>, QueryUserByString?: Maybe<Array<(
-    { __typename?: 'User' }
-    & UserFieldsFragment
-  )>> }
+  )> }
 );
 
 
@@ -438,83 +451,180 @@ export const TodoFieldsFragmentDoc = gql`
   }
 }
     ${UserFragmentFieldsFragmentDoc}`;
-export const TodoFragmentFieldsFragmentDoc = gql`
-    fragment TodoFragmentFields on TodoItem {
-  id
-  title
-  content
-  type
-}
-    `;
-export const UserFieldsFragmentDoc = gql`
-    fragment UserFields on User {
-  id
-  name
-  nickName
-  todos {
-    ...TodoFragmentFields
-  }
-}
-    ${TodoFragmentFieldsFragmentDoc}`;
-export const QueryOperationDocument = gql`
-    query QueryOperation($id: Int!, $type: ItemType!, $str: String!) {
+export const QueryAllTodosDocument = gql`
+    query QueryAllTodos {
   QueryAllTodos {
     ...TodoFields
   }
-  QueryTodoById(id: $id) {
-    ...TodoFields
-  }
-  QueryTodoByTypes(type: $type) {
-    ...TodoFields
-  }
-  QueryTodoByString(str: $str) {
-    ...TodoFields
-  }
-  QueryUserTodos(id: $id) {
-    ...TodoFields
-  }
-  QueryAllUsers {
-    ...UserFields
-  }
-  QueryUserById(id: $id) {
-    ...UserFields
-  }
-  QueryUserByString(str: $str) {
-    ...UserFields
-  }
 }
-    ${TodoFieldsFragmentDoc}
-${UserFieldsFragmentDoc}`;
+    ${TodoFieldsFragmentDoc}`;
 
 /**
- * __useQueryOperationQuery__
+ * __useQueryAllTodosQuery__
  *
- * To run a query within a React component, call `useQueryOperationQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryOperationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useQueryAllTodosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryAllTodosQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQueryOperationQuery({
+ * const { data, loading, error } = useQueryAllTodosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQueryAllTodosQuery(baseOptions?: Apollo.QueryHookOptions<QueryAllTodosQuery, QueryAllTodosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryAllTodosQuery, QueryAllTodosQueryVariables>(QueryAllTodosDocument, options);
+      }
+export function useQueryAllTodosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryAllTodosQuery, QueryAllTodosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryAllTodosQuery, QueryAllTodosQueryVariables>(QueryAllTodosDocument, options);
+        }
+export type QueryAllTodosQueryHookResult = ReturnType<typeof useQueryAllTodosQuery>;
+export type QueryAllTodosLazyQueryHookResult = ReturnType<typeof useQueryAllTodosLazyQuery>;
+export type QueryAllTodosQueryResult = Apollo.QueryResult<QueryAllTodosQuery, QueryAllTodosQueryVariables>;
+export const QueryTodoByIdDocument = gql`
+    query QueryTodoById($id: Int!) {
+  QueryTodoById(id: $id) {
+    ...TodoFields
+  }
+}
+    ${TodoFieldsFragmentDoc}`;
+
+/**
+ * __useQueryTodoByIdQuery__
+ *
+ * To run a query within a React component, call `useQueryTodoByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryTodoByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryTodoByIdQuery({
  *   variables: {
  *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useQueryTodoByIdQuery(baseOptions: Apollo.QueryHookOptions<QueryTodoByIdQuery, QueryTodoByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryTodoByIdQuery, QueryTodoByIdQueryVariables>(QueryTodoByIdDocument, options);
+      }
+export function useQueryTodoByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryTodoByIdQuery, QueryTodoByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryTodoByIdQuery, QueryTodoByIdQueryVariables>(QueryTodoByIdDocument, options);
+        }
+export type QueryTodoByIdQueryHookResult = ReturnType<typeof useQueryTodoByIdQuery>;
+export type QueryTodoByIdLazyQueryHookResult = ReturnType<typeof useQueryTodoByIdLazyQuery>;
+export type QueryTodoByIdQueryResult = Apollo.QueryResult<QueryTodoByIdQuery, QueryTodoByIdQueryVariables>;
+export const QueryTodoByTypesDocument = gql`
+    query QueryTodoByTypes($type: ItemType!) {
+  QueryTodoByTypes(type: $type) {
+    ...TodoFields
+  }
+}
+    ${TodoFieldsFragmentDoc}`;
+
+/**
+ * __useQueryTodoByTypesQuery__
+ *
+ * To run a query within a React component, call `useQueryTodoByTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryTodoByTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryTodoByTypesQuery({
+ *   variables: {
  *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useQueryTodoByTypesQuery(baseOptions: Apollo.QueryHookOptions<QueryTodoByTypesQuery, QueryTodoByTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryTodoByTypesQuery, QueryTodoByTypesQueryVariables>(QueryTodoByTypesDocument, options);
+      }
+export function useQueryTodoByTypesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryTodoByTypesQuery, QueryTodoByTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryTodoByTypesQuery, QueryTodoByTypesQueryVariables>(QueryTodoByTypesDocument, options);
+        }
+export type QueryTodoByTypesQueryHookResult = ReturnType<typeof useQueryTodoByTypesQuery>;
+export type QueryTodoByTypesLazyQueryHookResult = ReturnType<typeof useQueryTodoByTypesLazyQuery>;
+export type QueryTodoByTypesQueryResult = Apollo.QueryResult<QueryTodoByTypesQuery, QueryTodoByTypesQueryVariables>;
+export const QueryTodoByStringDocument = gql`
+    query QueryTodoByString($str: String!) {
+  QueryTodoByString(str: $str) {
+    ...TodoFields
+  }
+}
+    ${TodoFieldsFragmentDoc}`;
+
+/**
+ * __useQueryTodoByStringQuery__
+ *
+ * To run a query within a React component, call `useQueryTodoByStringQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryTodoByStringQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryTodoByStringQuery({
+ *   variables: {
  *      str: // value for 'str'
  *   },
  * });
  */
-export function useQueryOperationQuery(baseOptions: Apollo.QueryHookOptions<QueryOperationQuery, QueryOperationQueryVariables>) {
+export function useQueryTodoByStringQuery(baseOptions: Apollo.QueryHookOptions<QueryTodoByStringQuery, QueryTodoByStringQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryOperationQuery, QueryOperationQueryVariables>(QueryOperationDocument, options);
+        return Apollo.useQuery<QueryTodoByStringQuery, QueryTodoByStringQueryVariables>(QueryTodoByStringDocument, options);
       }
-export function useQueryOperationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryOperationQuery, QueryOperationQueryVariables>) {
+export function useQueryTodoByStringLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryTodoByStringQuery, QueryTodoByStringQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryOperationQuery, QueryOperationQueryVariables>(QueryOperationDocument, options);
+          return Apollo.useLazyQuery<QueryTodoByStringQuery, QueryTodoByStringQueryVariables>(QueryTodoByStringDocument, options);
         }
-export type QueryOperationQueryHookResult = ReturnType<typeof useQueryOperationQuery>;
-export type QueryOperationLazyQueryHookResult = ReturnType<typeof useQueryOperationLazyQuery>;
-export type QueryOperationQueryResult = Apollo.QueryResult<QueryOperationQuery, QueryOperationQueryVariables>;
+export type QueryTodoByStringQueryHookResult = ReturnType<typeof useQueryTodoByStringQuery>;
+export type QueryTodoByStringLazyQueryHookResult = ReturnType<typeof useQueryTodoByStringLazyQuery>;
+export type QueryTodoByStringQueryResult = Apollo.QueryResult<QueryTodoByStringQuery, QueryTodoByStringQueryVariables>;
+export const QueryUserTodosDocument = gql`
+    query QueryUserTodos($id: Int!) {
+  QueryUserTodos(id: $id) {
+    ...TodoFields
+  }
+}
+    ${TodoFieldsFragmentDoc}`;
+
+/**
+ * __useQueryUserTodosQuery__
+ *
+ * To run a query within a React component, call `useQueryUserTodosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryUserTodosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryUserTodosQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useQueryUserTodosQuery(baseOptions: Apollo.QueryHookOptions<QueryUserTodosQuery, QueryUserTodosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryUserTodosQuery, QueryUserTodosQueryVariables>(QueryUserTodosDocument, options);
+      }
+export function useQueryUserTodosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryUserTodosQuery, QueryUserTodosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryUserTodosQuery, QueryUserTodosQueryVariables>(QueryUserTodosDocument, options);
+        }
+export type QueryUserTodosQueryHookResult = ReturnType<typeof useQueryUserTodosQuery>;
+export type QueryUserTodosLazyQueryHookResult = ReturnType<typeof useQueryUserTodosLazyQuery>;
+export type QueryUserTodosQueryResult = Apollo.QueryResult<QueryUserTodosQuery, QueryUserTodosQueryVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {
@@ -526,4 +636,4 @@ export type QueryOperationQueryResult = Apollo.QueryResult<QueryOperationQuery, 
 };
       export default result;
     
-// The file generated on: 2021.03.21 12:03:72 pm-
+// The file generated on: 2021.03.22 11:03:84 am-

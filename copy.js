@@ -29,3 +29,14 @@ fs.copy(
   .catch((err) => {
     console.error(err);
   });
+
+fs.copy(
+  "./src/typegraphql-apollo-server/prisma",
+  "./dist/typegraphql-apollo-server/prisma"
+)
+  .then((_) => {
+    console.log(chalk.green("=== Copy TypeGraphQL-Apollo Prisma Client ==="));
+  })
+  .catch((err) => {
+    console.error(err);
+  });
