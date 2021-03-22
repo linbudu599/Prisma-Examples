@@ -21,7 +21,11 @@ jobs:
         run: |
           npm install
           npm install prisma @prisma/client -g
-      - name: Build
+      - name: Generate Client
+        run: npm run gen:client
+      - name: Compile & Init
         run: npm run build
       - name: Invoke
         run: npm run invoke
+      - name: Test(GraphQL Only)
+        run: npm run test

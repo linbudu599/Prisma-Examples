@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const chalk = require("chalk");
 
-fs.copy("./src/single-model/prisma", "./dist/single-model/prisma")
+fs.copy("./src/single-model/prisma", "./dist/src/single-model/prisma")
   .then((_) => {
     console.log(chalk.green("=== Copy Single-Model Prisma Client ==="));
   })
@@ -9,7 +9,7 @@ fs.copy("./src/single-model/prisma", "./dist/single-model/prisma")
     console.error(err);
   });
 
-fs.copy("./src/multi-models/prisma", "./dist/multi-models/prisma")
+fs.copy("./src/multi-models/prisma", "./dist/src/multi-models/prisma")
   .then((_) => {
     console.log(chalk.green("=== Copy Multi-Models Prisma Client ==="));
   })
@@ -19,7 +19,7 @@ fs.copy("./src/multi-models/prisma", "./dist/multi-models/prisma")
 
 fs.copy(
   "./src/multi-models-advanced/prisma",
-  "./dist/multi-models-advanced/prisma"
+  "./dist/src/multi-models-advanced/prisma"
 )
   .then((_) => {
     console.log(
@@ -32,7 +32,7 @@ fs.copy(
 
 fs.copy(
   "./src/typegraphql-apollo-server/prisma",
-  "./dist/typegraphql-apollo-server/prisma"
+  "./dist/src/typegraphql-apollo-server/prisma"
 )
   .then((_) => {
     console.log(chalk.green("=== Copy TypeGraphQL-Apollo Prisma Client ==="));

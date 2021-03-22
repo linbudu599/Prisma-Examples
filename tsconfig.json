@@ -2,7 +2,8 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "dist",
-    "target": "ES2018",
+    "target": "ES2015",
+    "module": "commonjs",
     "strict": true,
     "lib": ["esnext", "ES2018"],
     "skipLibCheck": true,
@@ -12,5 +13,5 @@
     "noImplicitAny": false,
     "moduleResolution": "node"
   },
-  "exclude": ["./**/client"]
+  "exclude": ["./**/client", "./**/tests"]
 }
