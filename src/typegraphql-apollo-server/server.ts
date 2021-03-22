@@ -39,6 +39,7 @@ export const server = new ApolloServer({
 });
 
 server.listen(5999, () => {
+  // 只是为了加载效果好看点
   setTimeout(() => {
     spinner.succeed(
       chalk.greenBright(

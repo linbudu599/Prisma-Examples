@@ -51,3 +51,5 @@ npm run invoke
   - `npm run dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
   - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)
+- Test:
+  - test script will remove SQLite file and re-seed data before test suites start to run.

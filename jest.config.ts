@@ -1,0 +1,21 @@
+export default {
+  automock: false,
+  bail: 0,
+  clearMocks: true,
+  collectCoverage: true,
+  collectCoverageFrom: ["./src/typegraphql-apollo-server/*.test.ts"],
+  coverageDirectory: "coverage",
+  coveragePathIgnorePatterns: ["\\\\node_modules\\\\"],
+  coverageProvider: "v8",
+  coverageReporters: ["json", "text", "lcov", "clover"],
+  errorOnDeprecated: true,
+  maxWorkers: "70%",
+  moduleDirectories: ["node_modules"],
+  preset: "ts-jest",
+  runner: "jest-runner",
+  setupFiles: [],
+  testEnvironment: "node",
+  testMatch: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
+
+  testPathIgnorePatterns: ["\\\\node_modules\\\\"],
+};
