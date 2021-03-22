@@ -65,5 +65,6 @@ npm run test
   - `npm run dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
   - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)
+  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)
 - Test:
   - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。

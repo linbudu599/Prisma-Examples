@@ -1,0 +1,82 @@
+type Query {
+  QueryAllTodos: [TodoItem!]!
+  QueryTodoById(id: Int!): TodoItem
+  QueryTodoByString(str: String!): [TodoItem!]!
+  QueryTodoByTypes(type: ItemType!): [TodoItem!]!
+  QueryUserTodos(id: Int!): [TodoItem!]!
+  QueryAllUsers: [User!]!
+  QueryUserById(id: Int!): User
+  QueryUserByString(str: String!): [User!]
+}
+
+type TodoItem {
+  id: ID!
+  title: String!
+  content: String
+  finished: Boolean!
+  type: String!
+  creator: User
+  creatorId: Int
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+}
+
+type User {
+  id: ID!
+  name: String!
+  nickName: String
+  todos: [TodoItem!]
+}
+
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"""Todo Item Type"""
+enum ItemType {
+  LIFE
+  FEATURE
+  BUG
+  IDEA
+}
+
+type Mutation {
+  MutateTodoStatus(status: Boolean!, id: Int!): TodoItem
+  CreateTodo(createParams: CreateTodoInput!): TodoItem
+  UpdateTodo(updateParams: UpdateTodoInput!): TodoItem
+  DeleteTodoById(id: Int!): TodoItem
+  DeleteUserTodos(userId: Int!): BatchPayload!
+  CreateUser(createParams: CreateUserInput!): User!
+  UpdateUser(updateParams: UpdateUserInput!): User!
+  DeleteUser(id: Int!): User!
+}
+
+input CreateTodoInput {
+  title: String!
+  userId: Int!
+  content: String
+  type: String
+}
+
+input UpdateTodoInput {
+  id: Int!
+  title: String
+  content: String
+  type: String
+}
+
+type BatchPayload {
+  count: Int!
+}
+
+input CreateUserInput {
+  name: String!
+  nickName: String
+}
+
+input UpdateUserInput {
+  id: Int!
+  name: String
+  nickName: String
+}

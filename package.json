@@ -23,6 +23,7 @@
     "dev": "nodemon ./src/typegraphql-apollo-server/server.ts",
     "seed": "cd ./src/typegraphql-apollo-server && prisma db seed --preview-feature",
     "gen:code": "graphql-codegen --config codegen.yml",
+    "gen:genql": "genql --endpoint http://localhost:5999/graphql --output ./src/typegraphql-apollo-server/generated/genql",
     "test": "jest --forceExit",
     "pretest": "cd ./src/typegraphql-apollo-server && rimraf -rf todo.sqlite && prisma db push --preview-feature && prisma db seed --preview-feature"
   },
@@ -38,6 +39,7 @@
   "homepage": "https://github.com/linbudu599/Prisma-Article-Example#readme",
   "dependencies": {
     "@apollo/client": "^3.3.12",
+    "@genql/runtime": "^2.5.0",
     "@prisma/client": "^2.19.0",
     "apollo-server": "^2.21.2",
     "class-transformer": "^0.4.0",
@@ -52,6 +54,7 @@
     "typescript": "^4.2.3"
   },
   "devDependencies": {
+    "@genql/cli": "^2.5.0",
     "@graphql-codegen/add": "^2.0.2",
     "@graphql-codegen/cli": "^1.21.3",
     "@graphql-codegen/fragment-matcher": "^2.0.1",
