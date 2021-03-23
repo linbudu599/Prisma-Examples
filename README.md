@@ -65,6 +65,105 @@ npm run test
   - `npm run dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
   - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)
-  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)
+  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
 - Test:
   - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。
+
+### with NestJS
+
+- Create `PrismaService` which extends `PrismaClient`:
+
+  ```typescript
+  import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  OnApplicationBootstrap,
+  OnApplicationShutdown,
+  } from '@nestjs/common';
+  import { PrismaClient } from '@prisma/client';
+
+  @Injectable()
+  export class PrismaService
+    extends PrismaClient
+    implements
+      OnModuleInit,
+      OnApplicationBootstrap,
+      OnModuleDestroy,
+      OnApplicationShutdown {
+    constructor() {
+      super();
+    }
+
+    async onModuleInit() {
+      await this.$connect();
+    }
+
+    async onApplicationBootstrap() {
+      // await seeds();
+    }
+
+    async onModuleDestroy() {}
+
+    async onApplicationShutdown() {
+      await this.$disconnect();
+    }
+  }
+  ```
+
+- Register `PrismaService` as a provider, and `PrismaModule` as a Global module:
+
+  ```typescript
+  import { Global, Module } from '@nestjs/common';
+
+  import { PrismaService } from './prisma.service';
+
+  @Global()
+  @Module({
+    providers: [PrismaService],
+    exports: [PrismaService],
+  })
+  export default class PrismaModule {}
+  ```
+
+- Import `PrismaModule` in `AppModule`:
+
+  ```typescript
+  import PrismaModule from './prisma/prisma.module';
+
+  @Module({
+    imports: [PrismaModule],
+  })
+  export class AppModule
+    implements NestModule, OnApplicationBootstrap, OnApplicationShutdown {
+    constructor(private readonly connection: Connection) {}
+
+    async configure(
+      consumer: MiddlewareConsumer
+    ): Promise<void | MiddlewareConsumer> {
+    
+    }
+
+    // you can connect/disconnect prisma client here
+    async onApplicationBootstrap() {}
+
+    async onApplicationShutdown() {}
+  }
+  ```
+
+- Use `PrismaService`:
+
+  ```typescript
+  import { Injectable } from '@nestjs/common';
+  import { PrismaService } from '../../prisma/prisma.service';
+
+  @Injectable()
+  export class UserService {
+    constructor(private prisma: PrismaService) {}
+
+    async queryAllUsers() {
+      const res = await this.prisma.user.findMany({});
+      return res;
+    }
+  }
+  ```

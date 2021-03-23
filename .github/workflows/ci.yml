@@ -21,11 +21,17 @@ jobs:
         run: |
           npm install
           npm install prisma @prisma/client -g
+
+      # TS下生成PrismaClient
       - name: Generate Client
         run: npm run gen:client
+
+      # 编译到JS，在编译产物目录中生成SQLite文件
       - name: Compile & Init
         run: npm run build
+
       - name: Invoke
         run: npm run invoke
+
       - name: Test(GraphQL Only)
         run: npm run test
