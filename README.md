@@ -6,11 +6,10 @@
 ## 开始
 
 ```bash
-# 安装Prisma CLI
-# 最新版本@prisma/cli已被弃用，更改为prisma
 npm install
 
 # 可选：将Prisma CLI安装到全局
+# 新版本@中prisma/cli已被弃用，更名为prisma
 npm install prisma -g
 
 # 可用示例：
@@ -22,6 +21,8 @@ cd multi-models
 cd multi-models-advanced
 # GraphQL 示例
 cd typegraphql-apollo-server 
+# 多数据库示例
+cd multi-databases
 
 # 为所有示例生成Prisma Client
 npm run gen:client
