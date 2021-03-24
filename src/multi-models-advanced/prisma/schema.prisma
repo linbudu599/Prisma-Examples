@@ -66,6 +66,7 @@ model User {
   id   Int    @id @default(autoincrement())
   name String @unique
   age  Int    @default(0)
+  a    String @default("xx1")
 
   posts Post[]
 

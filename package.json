@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "reset": "rimraf -rf ./**/prisma/client",
+    "gen:client:ci": "npm-run-all --print-label --sequential generate:**",
     "gen:client": "npm-run-all --print-label --parallel generate:**",
     "generate:single": "cd ./src/single-model && prisma db push --preview-feature && prisma generate",
     "generate:multi": "cd ./src/multi-models && prisma db push --preview-feature && prisma generate",

@@ -24,7 +24,7 @@ jobs:
 
       # TS下生成PrismaClient
       - name: Generate Client
-        run: npm run gen:client
+        run: npm run gen:client:ci
 
       # 编译到JS，在编译产物目录中生成SQLite文件
       - name: Compile & Init
