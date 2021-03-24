@@ -27,16 +27,19 @@ cd multi-databases
 # 为所有示例生成Prisma Client
 npm run gen:client
 
-# 需要全局安装prisma
+# prisma 常见命令
 
-# 生成sqlite文件
+# 同步schema到数据库(本例中是生成sqlite文件)
 prisma db push --preview-feature
 
 # 生成prisma client文件
 prisma generate
 
 # 改动Prisma Schema后执行此命令来迁移数据库 并重新执行generate生成Prisma Client
-# prisma migrate
+prisma migrate
+
+# 从已有的数据库生成prisma schema
+prisma introspect
 
 # 快速执行示例
 npm run build
@@ -56,7 +59,7 @@ npm run test
 - `Post` -> `Category`: **m-n**(connected by `CtegoriesOnPosts` model)
 - Self-Relation: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
 
-### with TypeGraphQL + Apollo-Server
+## with TypeGraphQL + Apollo-Server
 
 - [Generated Schema](src/typegraphql-apollo-server/graphql/shema.graphql)
 - [Generated TypeScript Code](src/typegraphql-apollo-server/generated/index.ts)
@@ -70,7 +73,13 @@ npm run test
 - Test:
   - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。
 
-### with NestJS
+## Multi-Databases
+
+Prisma Client的机制使得你可以使用多个schema（即不同的数据库类型、不同的数据库连接、不同的feature开启配置等）来生成多个client，然后分别导入这些client即可。
+
+查看 [Multi-Databases](src/multi-databases/index.ts) 来获得具体示例。
+
+## with NestJS
 
 - Create `PrismaService` which extends `PrismaClient`:
 
