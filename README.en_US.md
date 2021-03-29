@@ -1,67 +1,68 @@
 # Prisma-Article-Example
 
-**Prisma: 下一代ORM, 不仅仅是ORM** Demo 仓库
+Prisma Examples.
 
-**简体中文** | [**English**](./README.en_US.md)
+[**简体中文**](README.md) | **English**
 
-## 开始
+## Get Started
 
 ```bash
 npm install
 
-# 可选：将Prisma CLI安装到全局
-# 新版本中@prisma/cli已被弃用，更名为prisma
+# Optional: Install Prisma CLI Globally
+# @prisma/cli has been deprecated and prisma instead should be used
 npm install prisma -g
 
-# 可用示例：
-# 单表
+# avaliable examples：
+# single model
 cd single-model
- # 多表关联
+ # multi models & relations
 cd multi-models
- # 多表关联下的进阶使用
+ # advanced multi models example
 cd multi-models-advanced
-# GraphQL 示例
+# GraphQL example(TypeGraphQL + Apollo-Server)
 cd typegraphql-apollo-server 
-# 多数据库示例
+# multi prisma client example
 cd multi-clients
-# 与 TypeORM / TypeGoose 一同使用
+# with TypeORM / TypeGoose
 cd with-typeorm
 cd with-typegoose
 
-# 为所有示例生成Prisma Client
+# generate Prisma Client for all examples
 npm run gen:client
 
-# prisma 常见命令
+# common prisma commands
 
-# 同步schema到数据库(本例中是生成sqlite文件)
+# sync Prisma Schema with database(in this repo, will generate sqlite file)
 prisma db push --preview-feature
 
-# 生成prisma client文件
+# generate Prisma Client from prisma schema
 prisma generate
 
-# 改动Prisma Schema后执行此命令来迁移数据库 并重新执行generate生成Prisma Client
+# execute this command to invoke database migration after Prisma Schema got modified
 prisma migrate
 
-# 从已有的数据库生成prisma schema
+# generate Prisma Schema from exist database
 prisma introspect
 
-# 快速执行示例
-npm run build
-npm run invoke
+# explore this project
 
-# 执行测试（GraphQL 示例）
+# execute all examples from empty
+npm run flow
+
+# run test cases（GraphQL example）
 npm run test
 ```
 
 ## Advanced Multi-Models Example
 
 ### Relation
-
+ 
 - `User` -> `Post`: **1-n**
-- `User` -> `Profile`: **1-1** (在 `User` 表中可选, 在 `Profile` 表中必选)
-- `User` -> `Fragment`: **1-n** (在 `User`/`Fragment` 表中可选)
-- `Post` -> `Category`: **m-n**(使用额外的 `CategoriesOnPosts` 表来连结)
-- Self-Relation（自关联）: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
+- `User` -> `Profile`: **1-1** (Optional in User, Required in Profile)
+- `User` -> `Fragment`: **1-n** (Optional in User, Optional in Fragment)
+- `Post` -> `Category`: **m-n**(connected by `CtegoriesOnPosts` model)
+- Self-Relation: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
 
 ## With TypeGraphQL + Apollo-Server
 
@@ -72,16 +73,16 @@ npm run test
 - Explore
   - `npm run dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
-  - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)
+  - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(arguments in operations are from database initial data seeding)
   - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
 - Test:
-  - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。
+  - database in GraphQL example will be reset before running test cases.
 
 ## Multi-Clients
 
-Prisma Client的机制使得你可以使用多个schema（即不同的数据库类型、不同的数据库连接、不同的feature开启配置等）来生成多个client，然后分别导入这些client即可。
+The design of Prisma Client enables you to generate client from various schemas(different databse type / different database connection / different feature configuration / ...)
 
-查看 [Multi-Clients](src/multi-clients/index.ts) 来获得具体示例。
+Check [Multi-Clients](src/multi-clients/index.ts) for details。
 
 ## With Other ORMs
 
@@ -95,7 +96,7 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
 
 ## With NestJS
 
-- 基于`PrismaClient`创建`PrismaService`:
+- Create `PrismaService` which extends `PrismaClient`:
 
   ```typescript
   import {
@@ -135,7 +136,7 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
   }
   ```
 
-- 将`PrismaService`注册为自定义提供者, 同时将`PrismaModule`注册为全局模块:
+- Register `PrismaService` as a provider, and `PrismaModule` as a Global module:
 
   ```typescript
   import { Global, Module } from '@nestjs/common';
@@ -150,7 +151,7 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
   export default class PrismaModule {}
   ```
 
-- 在`AppModule`导入`PrismaModule`:
+- Import `PrismaModule` in `AppModule`:
 
   ```typescript
   import PrismaModule from './prisma/prisma.module';
@@ -175,7 +176,7 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
   }
   ```
 
-- 使用`PrismaService`:
+- Use `PrismaService`:
 
   ```typescript
   import { Injectable } from '@nestjs/common';
