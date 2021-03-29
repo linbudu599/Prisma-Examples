@@ -59,7 +59,7 @@ npm run test
 - `Post` -> `Category`: **m-n**(connected by `CtegoriesOnPosts` model)
 - Self-Relation: `User.invitor`(**1-1**) & `User.invitation`(**1-n**)
 
-## with TypeGraphQL + Apollo-Server
+## With TypeGraphQL + Apollo-Server
 
 - [Generated Schema](src/typegraphql-apollo-server/graphql/shema.graphql)
 - [Generated TypeScript Code](src/typegraphql-apollo-server/generated/index.ts)
@@ -79,7 +79,14 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
 
 查看 [Multi-Clients](src/multi-clients/index.ts) 来获得具体示例。
 
-## with NestJS
+## With Other ORMs
+
+### With TypeORM(SQLite + SQLite)
+
+[Example](src/with-typeorm/index.ts)
+
+
+## With NestJS
 
 - Create `PrismaService` which extends `PrismaClient`:
 

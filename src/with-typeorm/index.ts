@@ -6,17 +6,21 @@ import { createConnection } from "typeorm";
 
 import { ValueEntity } from "./value.entity";
 
-import { PrismaClient } from "./prisma/client";
+import { Key, PrismaClient } from "./prisma/client";
 
 dotenv.config();
 
 const prisma = new PrismaClient();
 
+const IS_PROD = process.env.NODE_ENV === "prod";
+
 async function main() {
   // Setup TypeORM Connection
   const connection = await createConnection({
     type: "sqlite",
-    database: "./typeorm-value.sqlite",
+    database: IS_PROD
+      ? "./dist/src/with-typeorm/typeorm-value.sqlite"
+      : "./src/with-typeorm/typeorm-value.sqlite",
     entities: [ValueEntity],
     synchronize: true,
     dropSchema: true,
@@ -25,6 +29,7 @@ async function main() {
   await ValueEntity.clear();
   await prisma.key.deleteMany();
 
+  // seeding
   const key1 = await prisma.key.create({
     data: {
       key: uuidv4(),
@@ -62,6 +67,26 @@ async function main() {
 
   const values = await ValueEntity.createQueryBuilder("value").getMany();
   console.log("values: ", values);
+
+  // query
+  const keys = await prisma.key.findMany();
+
+  for (const keyItem of keys) {
+    const key = ((keyItem as unknown) as Key).key;
+
+    // FIXME: type
+    console.log(`Search By: ${key}`);
+    const value = await ValueEntity.createQueryBuilder("value")
+
+      .where("value.key = :key")
+      .setParameters({
+        key,
+      })
+      .getOne();
+
+    console.log("value: ", value);
+    console.log("===");
+  }
 
   await prisma.$disconnect();
   await connection.close();

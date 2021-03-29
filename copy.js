@@ -63,3 +63,11 @@ fs.copy(
   .catch((err) => {
     console.error(err);
   });
+
+fs.copy("./src/with-typeorm/prisma", "./dist/src/with-typeorm/prisma")
+  .then((_) => {
+    console.log(chalk.green("=== Copy WithTypeORM Prisma Client ==="));
+  })
+  .catch((err) => {
+    console.error(err);
+  });
