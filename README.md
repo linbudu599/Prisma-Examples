@@ -86,6 +86,11 @@ Prisma Client的机制使得你可以使用多个schema（即不同的数据库�
 [Example](src/with-typeorm/index.ts)
 
 
+### With TypeORM(SQLite + MongoDB)
+
+[Example](src/with-typegoose/index.ts)
+
+
 ## With NestJS
 
 - Create `PrismaService` which extends `PrismaClient`:

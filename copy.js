@@ -66,7 +66,15 @@ fs.copy(
 
 fs.copy("./src/with-typeorm/prisma", "./dist/src/with-typeorm/prisma")
   .then((_) => {
-    console.log(chalk.green("=== Copy WithTypeORM Prisma Client ==="));
+    console.log(chalk.green("=== Copy With-TypeORM Prisma Client ==="));
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+fs.copy("./src/with-typegoose/prisma", "./dist/src/with-typegoose/prisma")
+  .then((_) => {
+    console.log(chalk.green("=== Copy With-TypeGoose Prisma Client ==="));
   })
   .catch((err) => {
     console.error(err);
