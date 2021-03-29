@@ -41,10 +41,10 @@ fs.copy(
     console.error(err);
   });
 
-// In multi-databases example we will re-generate client later
+// In multi-clients example we will re-generate client later
 fs.copy(
-  "./src/multi-databases/prisma-key/schema.prisma",
-  "./dist/src/multi-databases/prisma-key/schema.prisma"
+  "./src/multi-clients/prisma-key/schema.prisma",
+  "./dist/src/multi-clients/prisma-key/schema.prisma"
 )
   .then((_) => {
     console.log(chalk.green("=== Copy Multi-DB(Key) Prisma Client ==="));
@@ -54,8 +54,8 @@ fs.copy(
   });
 
 fs.copy(
-  "./src/multi-databases/prisma-value/schema.prisma",
-  "./dist/src/multi-databases/prisma-value/schema.prisma"
+  "./src/multi-clients/prisma-value/schema.prisma",
+  "./dist/src/multi-clients/prisma-value/schema.prisma"
 )
   .then((_) => {
     console.log(chalk.green("=== Copy Multi-DB(Value) Prisma Client ==="));

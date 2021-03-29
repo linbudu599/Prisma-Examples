@@ -8,6 +8,10 @@ const keyClient = new PrismaKeyClient();
 const valueClient = new PrismaValueClient();
 
 async function main() {
+  // clear
+  await keyClient.key.deleteMany();
+  await valueClient.value.deleteMany();
+
   // seed
   const key1 = await keyClient.key.create({
     data: {

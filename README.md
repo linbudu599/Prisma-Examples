@@ -22,7 +22,7 @@ cd multi-models-advanced
 # GraphQL 示例
 cd typegraphql-apollo-server 
 # 多数据库示例
-cd multi-databases
+cd multi-clients
 
 # 为所有示例生成Prisma Client
 npm run gen:client
@@ -73,11 +73,11 @@ npm run test
 - Test:
   - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。
 
-## Multi-Databases
+## Multi-Clients
 
 Prisma Client的机制使得你可以使用多个schema（即不同的数据库类型、不同的数据库连接、不同的feature开启配置等）来生成多个client，然后分别导入这些client即可。
 
-查看 [Multi-Databases](src/multi-databases/index.ts) 来获得具体示例。
+查看 [Multi-Clients](src/multi-clients/index.ts) 来获得具体示例。
 
 ## with NestJS
 
