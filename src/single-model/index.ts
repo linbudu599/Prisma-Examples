@@ -4,6 +4,11 @@ const prisma = new PrismaClient();
 
 // middleware
 prisma.$use(async (params, next) => {
+  // model
+  // action
+  // args
+  // dataPath
+  // runInTransaction
   const result = await next(params);
   return result;
 });
@@ -12,7 +17,7 @@ async function createTodo(title: string, content?: string) {
   const res = await prisma.todo.create({
     data: {
       title,
-      content,
+      content: content ?? null,
     },
   });
   return res;
@@ -21,10 +26,11 @@ async function createTodo(title: string, content?: string) {
 async function getTodos(status?: boolean) {
   const res = await prisma.todo.findMany({
     orderBy: [{ id: "desc" }],
-    where: {
-      finished: status,
-    },
-    // 不能exclude?
+    where: status
+      ? {
+          finished: status,
+        }
+      : {},
     select: {
       id: true,
       title: true,
@@ -48,14 +54,22 @@ async function updateTodo(
   content?: string,
   finished?: boolean
 ) {
+  const origin = await prisma.todo.findUnique({
+    where: { id },
+  });
+
+  if (!origin) {
+    throw new Error("Item Inexist!");
+  }
+
   const res = await prisma.todo.update({
     where: {
       id,
     },
     data: {
-      title,
-      content,
-      finished,
+      title: title ?? origin.title,
+      content: content ?? origin.content,
+      finished: finished ?? origin.finished,
     },
   });
   return res;
@@ -102,26 +116,25 @@ async function clear() {
   console.log("QUERY_ALL");
   console.log(queryAllRes.map((item) => item.id));
 
-  const querySingleRes = await getTodoById(queryAllRes[0].id);
+  const querySingleRes = await getTodoById(createRes.id);
   console.log("QUERY_ONE");
   console.log(querySingleRes);
 
   const updateSingleRes = await updateTodo(
-    queryAllRes[0].id,
+    createRes.id,
     "UPDATED_TITLE",
-    "UPDATED_CONTENT",
-    true
+    "UPDATED_CONTENT"
   );
   console.log("UPDATE_SINGLE");
   console.log(updateSingleRes);
 
-  const deleteSingleRes = await deleteTodo(queryAllRes[0].id);
-  console.log("DELETE_ONE");
-  console.log(deleteSingleRes);
-
   const finishAllRes = await convertStatus(true);
   console.log("FINISH_ALL");
   console.log(finishAllRes);
+
+  const deleteSingleRes = await deleteTodo(createRes.id);
+  console.log("DELETE_ONE");
+  console.log(deleteSingleRes);
 
   const clearRes = await clear();
   console.log("CLEAR_ALL");
