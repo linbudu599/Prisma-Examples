@@ -103,5 +103,6 @@ dist
 .tern-port
 
 /**/*.sqlite
+/**/*.sqlite-journal
 
 /**/client
