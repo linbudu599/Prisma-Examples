@@ -17,8 +17,16 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     fragment: true,
   };
 
-  console.log("=== Create User Only ===");
-  const createUserOnly = await prisma.user.upsert({
+  const sampleUser = await prisma.user.create({
+    data: {
+      name: randomName(),
+    },
+  });
+
+  console.log("=== Upsert User Only ===");
+  // create on inexist
+  // update on exist
+  const upsertUserOnly = await prisma.user.upsert({
     where: {
       name: randomName(),
     },
@@ -30,7 +38,7 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     },
     select: simpleSelectFields,
   });
-  console.log(createUserOnly);
+  console.log(upsertUserOnly);
 
   console.log("=== Create Fragment Only ===");
   const createFragmentOnly = await prisma.fragment.create({
@@ -49,8 +57,12 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     data: {
       name: randomName(),
       invitor: {
-        connect: { id: createUserOnly.id },
+        connect: { id: upsertUserOnly.id },
       },
+    },
+    include: {
+      invitor: true,
+      invitation: true,
     },
   });
   console.log(connectToInvitor);
@@ -60,8 +72,17 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     data: {
       name: randomName(),
       invitation: {
-        connect: [{ id: createUserOnly.id }],
+        connect: [
+          { id: upsertUserOnly.id },
+          {
+            id: sampleUser.id,
+          },
+        ],
       },
+    },
+    include: {
+      invitor: true,
+      invitation: true,
     },
   });
   console.log(connectToInvitations);
@@ -69,7 +90,7 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
   console.log("=== Connect User & Fragment ===");
   const connectUserAndFragment = await prisma.user.update({
     where: {
-      id: createUserOnly.id,
+      id: upsertUserOnly.id,
     },
     data: {
       fragment: {
@@ -130,10 +151,10 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
       author: {
         connectOrCreate: {
           where: {
-            name: "U1",
+            name: "A1",
           },
           create: {
-            name: "U1",
+            name: "A1",
           },
         },
       },
@@ -146,10 +167,10 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
       author: {
         connectOrCreate: {
           where: {
-            name: "U2",
+            name: "A2",
           },
           create: {
-            name: "U2",
+            name: "A2",
           },
         },
       },
@@ -193,8 +214,6 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
   await createCategoriesOnPostsRecord(c2.id, p1.id);
   await createCategoriesOnPostsRecord(c2.id, p2.id);
 
-  console.log("=== Filtering Summary ===");
-
   console.log("=== Batch Operation Basic Filtering ===");
   const batchOperation = await prisma.user.findMany({
     where: {
@@ -235,12 +254,14 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
         avaliable: true,
       },
       // 所有均返回false
-      NOT: [],
+      // NOT: [],
       // 其中一组返回true
       OR: [
         {
           profile: {
-            bio: "xxx",
+            bio: {
+              contains: "",
+            },
           },
         },
         {
@@ -252,7 +273,6 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     },
     select: { id: true },
   });
-  console.log(multiFilterCondition);
 
   console.log("=== Relation Filter Condition ===");
 
@@ -295,9 +315,20 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
         where: {
           published: false,
         },
+        select: {
+          id: true,
+        },
       },
     },
   });
+
+  console.log(
+    "includeFiltering1: ",
+    includeFiltering1.map((user) => ({
+      id: user.id,
+      postIds: user.posts.map((post) => post.id),
+    }))
+  );
 
   // 返回至少有一篇未发布文章的用户
   const includeFiltering2 = await prisma.user.findMany({
@@ -313,9 +344,20 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
         where: {
           published: false,
         },
+        select: {
+          id: true,
+        },
       },
     },
   });
+
+  console.log(
+    "includeFiltering2: ",
+    includeFiltering2.map((user) => ({
+      id: user.id,
+      postIds: user.posts.map((post) => post.id),
+    }))
+  );
 
   console.log("=== Select Filtering ===");
 
@@ -325,6 +367,7 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
       avaliable: true,
     },
     select: {
+      id: true,
       posts: {
         where: {
           published: false,
@@ -335,6 +378,15 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
       },
     },
   });
+
+  console.log(
+    selectFiltering
+      .filter((record) => record.posts.length)
+      .map((record) => ({
+        id: record.id,
+        postTitle: record.posts.map((post) => post.title),
+      }))
+  );
 
   await prisma.$disconnect();
 })();
