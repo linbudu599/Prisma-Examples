@@ -7,11 +7,14 @@
 ## 开始
 
 ```bash
-npm install
+yarn
 
 # 可选：将Prisma CLI安装到全局
 # 新版本中@prisma/cli已被弃用，更名为prisma
-npm install prisma -g
+yarn global add prisma
+
+# 从零开始创建-编译-执行所有案例
+yarn glow
 
 # 可用示例：
 # 单表
@@ -29,7 +32,7 @@ cd with-typeorm
 cd with-typegoose
 
 # 为所有示例生成Prisma Client
-npm run gen:client
+yarn gen:client
 
 # prisma 常见命令
 
@@ -46,11 +49,10 @@ prisma migrate
 prisma introspect
 
 # 快速执行示例
-npm run build
-npm run invoke
+yarn flow
 
 # 执行测试（GraphQL 示例）
-npm run test
+yarn test
 ```
 
 ## Advanced Multi-Models Example
@@ -70,10 +72,10 @@ npm run test
 - [Prisma Model](src/typegraphql-apollo-server/prisma/schema.prisma)
 - [Resolvers](src/typegraphql-apollo-server/resolvers/)
 - Explore
-  - `npm run dev`
+  - `yarn dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
   - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(查询语句中的参数（如ID）需要你完成数据库初始数据填充后，再使用初始数据的ID)
-  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
+  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `yarn gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
 - Test:
   - 在执行测试用例前，会清空并重新生成GraphQL示例下的数据库初始数据。
 

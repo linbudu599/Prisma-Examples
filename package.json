@@ -5,6 +5,7 @@
   "scripts": {
     "reset": "rimraf -rf ./**/prisma/client",
     "flow": "npm run gen:client && npm run build && npm run invoke",
+    "studio": "cd ./src/typegraphql-apollo-server && prisma studio",
     "gen:client:ci": "npm-run-all --print-label --sequential generate:**",
     "gen:client": "npm-run-all --print-label --parallel generate:**",
     "generate:single": "cd ./src/single-model && prisma db push --preview-feature --force-reset --accept-data-loss",

@@ -7,11 +7,11 @@ Prisma Examples.
 ## Get Started
 
 ```bash
-npm install
+yarn
 
 # Optional: Install Prisma CLI Globally
 # @prisma/cli has been deprecated and prisma instead should be used
-npm install prisma -g
+yarn global add prisma
 
 # avaliable examples：
 # single model
@@ -29,7 +29,7 @@ cd with-typeorm
 cd with-typegoose
 
 # generate Prisma Client for all examples
-npm run gen:client
+yarn gen:client
 
 # common prisma commands
 
@@ -48,10 +48,10 @@ prisma introspect
 # explore this project
 
 # execute all examples from empty
-npm run flow
+yarn flow
 
 # run test cases（GraphQL example）
-npm run test
+yarn test
 ```
 
 ## Advanced Multi-Models Example
@@ -71,10 +71,10 @@ npm run test
 - [Prisma Model](src/typegraphql-apollo-server/prisma/schema.prisma)
 - [Resolvers](src/typegraphql-apollo-server/resolvers/)
 - Explore
-  - `npm run dev`
+  - `yarn dev`
   - open GraphiQL in [http://localhost:5999/graphql](http://localhost:5999/graphql)
   - [Example GraphQL Query / Mutation](src/typegraphql-apollo-server/graphql/)(arguments in operations are from database initial data seeding)
-  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `npm run gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
+  - [GenQL: Type Safe Graphql Query Builder](https://github.com/remorses/genql): `yarn gen:genql` (**Require local server online**)，[Example](src/typegraphql-apollo-server/graphql/genql.ts)
 - Test:
   - database in GraphQL example will be reset before running test cases.
 
