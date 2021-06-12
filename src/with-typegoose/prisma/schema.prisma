@@ -11,7 +11,7 @@ generator client {
   output   = "./client"
 }
 
-model Key {
+model PrismaKey {
   kid Int    @id @default(autoincrement())
   key String
 

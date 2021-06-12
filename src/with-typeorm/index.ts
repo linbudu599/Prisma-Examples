@@ -6,7 +6,7 @@ import { createConnection } from "typeorm";
 
 import { ValueEntity } from "./value.entity";
 
-import { Key, PrismaClient } from "./prisma/client";
+import { PrismaKey, PrismaClient } from "./prisma/client";
 
 dotenv.config();
 
@@ -27,10 +27,10 @@ async function main() {
   });
 
   await ValueEntity.clear();
-  await prisma.key.deleteMany();
+  await prisma.prismaKey.deleteMany();
 
   // seeding
-  const key1 = await prisma.key.create({
+  const key1 = await prisma.prismaKey.create({
     data: {
       key: uuidv4(),
     },
@@ -40,7 +40,7 @@ async function main() {
   });
   console.log("key1: ", key1);
 
-  const key2 = await prisma.key.create({
+  const key2 = await prisma.prismaKey.create({
     data: {
       key: uuidv4(),
     },
@@ -69,22 +69,21 @@ async function main() {
   console.log("values: ", values);
 
   // query
-  const keys = await prisma.key.findMany();
+  const keys = await prisma.prismaKey.findMany();
 
   for (const keyItem of keys) {
-    const key = ((keyItem as unknown) as Key).key;
+    const key = keyItem.key;
 
-    // FIXME: type
     console.log(`Search By: ${key}`);
-    const value = await ValueEntity.createQueryBuilder("value")
 
+    const value = await ValueEntity.createQueryBuilder("value")
       .where("value.key = :key")
       .setParameters({
         key,
       })
       .getOne();
 
-    console.log("value: ", value);
+    console.log("Search Result: ", value);
     console.log("===");
   }
 
