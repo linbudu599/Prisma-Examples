@@ -227,19 +227,35 @@ const randomBio = () => `Bio-${Math.floor(Math.random() * 100000)}`;
         },
         // set 与 many, 以及各选项类型
         // set: [],
+        // update
         // updateMany
+        // delete
         // deleteMany
         // disconnect: [
         //   {
         //     id: 1,
         //   },
         // ],
+        // connect
+        // create
+        // connectOrCreate
+        // upsert
       },
     },
     select: simpleSelectFields,
   });
   console.log("=== OneToMany Relation Update ===");
   console.log(oneToMnayUpdate);
+
+  // 类似于oneToMany
+  // const manyToManyUpdate = await prisma.post.update({
+  //   where: {
+  //     id: connectOrCreateRelationsUser.posts[0].id,
+  //   },
+  //   data: {
+  //     categories: {},
+  //   },
+  // });
 
   await prisma.$disconnect();
 })();
