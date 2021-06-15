@@ -14,7 +14,7 @@
     "dev:multi-db": "ts-node-dev --respawn --transpile-only ./src/multi-clients/index.ts",
     "dev:with-typeorm": "ts-node-dev --respawn --transpile-only ./src/with-typeorm/index.ts",
     "dev:with-typegoose": "ts-node-dev --respawn --transpile-only ./src/with-typegoose/index.ts",
-    "dev:graphql": "ts-node-dev --respawn --transpile-only ./src/typegraphql-apollo-server/server.ts",
+    "dev:graphql": "yarn init:graphql && ts-node-dev --respawn --transpile-only ./src/typegraphql-apollo-server/server.ts",
     "gen:client:ci": "npm-run-all --print-label --sequential generate:**",
     "gen:client": "npm-run-all --print-label --parallel generate:**",
     "generate:single": "cd ./src/single-model && prisma db push --force-reset --accept-data-loss",
@@ -44,10 +44,11 @@
     "invoke:with-typeorm": "cross-env NODE_ENV=prod node dist/src/with-typeorm/index.js",
     "invoke:with-typegoose": "node dist/src/with-typegoose/index.js",
     "seed": "cd ./src/typegraphql-apollo-server && prisma db seed --preview-feature",
+    "init:graphql": "ts-node ./src/typegraphql-apollo-server/prisma/seed.ts",
     "gen:code": "graphql-codegen --config codegen.yml",
     "gen:genql": "genql --endpoint http://localhost:5999/graphql --output ./src/typegraphql-apollo-server/generated/genql",
-    "test": "jest --forceExit",
-    "pretest": "cd ./src/typegraphql-apollo-server && rimraf -rf todo.sqlite && prisma db push && prisma db seed --preview-feature"
+    "test": "yarn init:graphql && jest --forceExit",
+    "pretest": "cd ./src/typegraphql-apollo-server && prisma db push --force-reset --accept-data-loss"
   },
   "repository": {
     "type": "git",

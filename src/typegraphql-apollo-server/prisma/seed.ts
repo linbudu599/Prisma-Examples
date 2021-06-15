@@ -2,7 +2,7 @@ import { PrismaClient } from "./client";
 
 const prisma = new PrismaClient();
 
-(async () => {
+export async function seed() {
   await prisma.todo.deleteMany();
 
   const todo1 = await prisma.todo.create({
@@ -68,4 +68,13 @@ const prisma = new PrismaClient();
   console.log("user2", user2);
 
   await prisma.$disconnect();
-})();
+}
+
+seed()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

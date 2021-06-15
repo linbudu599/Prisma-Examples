@@ -50,7 +50,7 @@ export default class UserResolver {
       return await ctx.prisma.user.create({
         data: {
           name: params.name,
-          nickName: params?.nickName,
+          nickName: params?.nickName ?? null,
         },
         include: { todos: true },
       });
@@ -65,13 +65,23 @@ export default class UserResolver {
     @Ctx() ctx: IContext
   ): Promise<User | null> {
     try {
+      const origin = await ctx.prisma.user.findUnique({
+        where: {
+          id: params.id,
+        },
+      });
+
+      if (!origin) {
+        throw new Error();
+      }
+
       return await ctx.prisma.user.update({
         where: {
           id: params.id,
         },
         data: {
-          name: params.name,
-          nickName: params?.nickName,
+          name: params.name ?? origin.name,
+          nickName: params?.nickName ?? origin.nickName,
         },
         include: { todos: true },
       });

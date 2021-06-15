@@ -99,7 +99,7 @@ export default class TodoResolver {
       return await ctx.prisma.todo.create({
         data: {
           title: params.title,
-          content: params?.content,
+          content: params?.content ?? null,
           type: params?.type ?? ItemType.FEATURE,
           creator: {
             connect: {
@@ -120,14 +120,22 @@ export default class TodoResolver {
     @Ctx() ctx: IContext
   ): Promise<TodoItem | null> {
     try {
+      const origin = await ctx.prisma.todo.findUnique({
+        where: { id: params.id },
+      });
+
+      if (!origin) {
+        throw new Error();
+      }
+
       return await ctx.prisma.todo.update({
         where: {
           id: params.id,
         },
         data: {
-          title: params.title,
-          content: params?.content,
-          type: params?.type,
+          title: params.title ?? origin?.title!,
+          content: params?.content ?? origin?.content!,
+          type: params?.type ?? origin?.type!,
         },
         include: { creator: true },
       });
