@@ -14,7 +14,7 @@ yarn
 yarn global add prisma
 
 # 从零开始创建-编译-执行所有案例
-yarn glow
+yarn flow
 
 # 目前可用的示例：
 # 单表
