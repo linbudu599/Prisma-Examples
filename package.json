@@ -47,7 +47,7 @@
     "init:graphql": "ts-node ./src/typegraphql-apollo-server/prisma/seed.ts",
     "gen:code": "graphql-codegen --config codegen.yml",
     "gen:genql": "genql --endpoint http://localhost:5999/graphql --output ./src/typegraphql-apollo-server/generated/genql",
-    "test:graphql": "yarn init:graphql && jest --forceExit",
+    "test:graphql": "yarn pretest && yarn init:graphql && jest --forceExit",
     "test:prisma": "jest --forceExit --config jest.config.prisma.ts",
     "pretest": "cd ./src/typegraphql-apollo-server && prisma db push --force-reset --accept-data-loss"
   },

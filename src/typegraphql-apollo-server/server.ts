@@ -2,7 +2,6 @@ import "reflect-metadata";
 import path from "path";
 
 import chalk from "chalk";
-import ora from "ora";
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
@@ -16,10 +15,6 @@ import UserResolver from "./resolvers/User.resolver";
 import { PrismaClient } from "./prisma/client";
 
 const prisma = new PrismaClient();
-
-const spinner = ora({
-  text: chalk.cyanBright("Starting Server... \n"),
-}).start();
 
 const schema = buildSchemaSync({
   resolvers: [TodoResolver, UserResolver],
@@ -47,12 +42,9 @@ export const server = new ApolloServer({
 });
 
 server.listen(5999, () => {
-  // 只是为了加载效果好看点
-  setTimeout(() => {
-    spinner.succeed(
-      chalk.greenBright(
-        `[Apollo Server] Server ready at http://localhost:5999/graphql \n`
-      )
-    );
-  }, 1000);
+  console.log(
+    chalk.greenBright(
+      `[Apollo Server] Server ready at http://localhost:5999/graphql \n`
+    )
+  );
 });

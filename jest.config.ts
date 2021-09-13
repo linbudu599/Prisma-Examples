@@ -4,6 +4,7 @@ export default {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: ["./src/typegraphql-apollo-server/*.test.ts"],
+  setupFiles: ["./prisma-unit-test/prisma.setup.ts"],
   coverageDirectory: "coverage",
   coveragePathIgnorePatterns: ["\\\\node_modules\\\\"],
   coverageProvider: "v8",
