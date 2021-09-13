@@ -13,5 +13,5 @@
     "noImplicitAny": false,
     "moduleResolution": "node"
   },
-  "exclude": ["./**/client", "./**/tests"]
+  "exclude": ["./**/client", "./**/tests", "prisma-unit-test"]
 }

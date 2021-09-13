@@ -3,7 +3,10 @@ import path from "path";
 
 import chalk from "chalk";
 import ora from "ora";
-
+import {
+  ApolloServerPluginLandingPageGraphQLPlayground,
+  ApolloServerPluginLandingPageDisabled,
+} from "apollo-server-core";
 import { ApolloServer } from "apollo-server";
 import { buildSchemaSync } from "type-graphql";
 
@@ -28,14 +31,19 @@ export const server = new ApolloServer({
   schema,
   introspection: true,
   context: { prisma },
-  playground: {
-    settings: {
-      "editor.theme": "dark" as "dark",
-      "editor.reuseHeaders": true,
-      "editor.fontSize": 16,
-      "editor.fontFamily": `'Fira Code', 'Source Code Pro', 'Consolas'`,
-    },
-  },
+
+  plugins: [
+    process.env.NODE_ENV === "production"
+      ? ApolloServerPluginLandingPageDisabled()
+      : ApolloServerPluginLandingPageGraphQLPlayground({
+          settings: {
+            "editor.theme": "dark" as const,
+            "editor.reuseHeaders": true,
+            "editor.fontSize": 16,
+            "editor.fontFamily": `'Fira Code', 'Source Code Pro', 'Consolas'`,
+          },
+        }),
+  ],
 });
 
 server.listen(5999, () => {

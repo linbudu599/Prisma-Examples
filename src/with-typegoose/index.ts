@@ -24,7 +24,7 @@ const ValueModel = getModelForClass(TypeGooseValue);
 async function main() {
   const connection = await mongoose.connect(
     process.env.WITH_TYPEGOOSE_TYPEGOOSE_VALUE_URL!,
-    { useNewUrlParser: true, useUnifiedTopology: true, dbName: "prisma" }
+    { dbName: "prisma" }
   );
 
   await ValueModel.deleteMany({});
