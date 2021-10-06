@@ -65,7 +65,7 @@
     "@apollo/client": "^3.4.11",
     "@genql/runtime": "^2.6.0",
     "@prisma/client": "^3.0.2",
-    "@typegoose/typegoose": "^8.3.0",
+    "@typegoose/typegoose": "^9.1.0",
     "apollo-server": "^3.3.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
