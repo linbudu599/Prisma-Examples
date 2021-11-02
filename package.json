@@ -70,7 +70,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
-    "graphql": "^15.5.3",
+    "graphql": "^16.0.1",
     "mongoose": "^6.0.5",
     "pg": "^8.7.1",
     "prisma": "^3.0.2",
