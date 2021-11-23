@@ -67,7 +67,7 @@
     "@prisma/client": "^3.0.2",
     "@typegoose/typegoose": "^8.3.0",
     "apollo-server": "^3.3.0",
-    "class-transformer": "^0.4.0",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.13.1",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.3",
