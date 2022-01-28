@@ -101,7 +101,7 @@
     "@types/node": "^16.9.1",
     "@types/uuid": "^8.3.1",
     "apollo-server-testing": "^2.25.2",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.0",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "esbuild-node-tsc": "^1.6.1",
