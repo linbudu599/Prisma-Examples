@@ -56,11 +56,11 @@ async function main() {
     .values([
       {
         key: key1.key,
-        value: "林不渡",
+        value: "Linbudu",
       },
       {
         key: key2.key,
-        value: "林不渡",
+        value: "Linbudu",
       },
     ])
     .execute();

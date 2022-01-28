@@ -37,7 +37,7 @@ async function main() {
   const value1 = await valueClient.value.create({
     data: {
       key: key1.key,
-      value: "林不渡",
+      value: "Linbudu",
     },
     select: {
       key: true,
@@ -50,7 +50,7 @@ async function main() {
   const value2 = await valueClient.value.create({
     data: {
       key: key2.key,
-      value: "林不渡",
+      value: "Linbudu",
     },
     select: {
       key: true,
@@ -64,7 +64,7 @@ async function main() {
   const keys = await keyClient.key.findMany({});
 
   for (const keyItem of keys) {
-    const key = ((keyItem as unknown) as Key).key;
+    const key = (keyItem as unknown as Key).key;
 
     // FIXME: type
     console.log(`Search By: ${key}`);

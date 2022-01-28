@@ -2,7 +2,7 @@ import { PrismaClient } from "./prisma/client";
 
 const prisma = new PrismaClient();
 
-const randomName = () => `林不渡-${Math.floor(Math.random() * 100000)}`;
+const randomName = () => `Linbudu-${Math.floor(Math.random() * 100000)}`;
 const randomTitle = () => `Title-${Math.floor(Math.random() * 100000)}`;
 const randomCategory = () => `Caterogy-${Math.floor(Math.random() * 100000)}`;
 const randomBio = () => `Bio-${Math.floor(Math.random() * 100000)}`;

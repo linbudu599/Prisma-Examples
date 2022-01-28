@@ -2,7 +2,7 @@ import { PrismaClient } from "./prisma/client";
 
 const prisma = new PrismaClient();
 
-const randomName = () => `林不渡-${Math.floor(Math.random() * 100000)}`;
+const randomName = () => `Linbudu-${Math.floor(Math.random() * 100000)}`;
 const randomTitle = () => `Title-${Math.floor(Math.random() * 100000)}`;
 const randomCategory = () => `Caterogy-${Math.floor(Math.random() * 100000)}`;
 const randomBio = () => `Bio-${Math.floor(Math.random() * 100000)}`;
@@ -219,9 +219,9 @@ const randomFragment = () => `Fragment-${Math.floor(Math.random() * 100000)}`;
     where: {
       // String Filter
       name: {
-        // equals: "林不渡",
+        // equals: "Linbudu",
         // not: "INEXIST_STR",
-        notIn: ["林不渡", "林不渡111"],
+        notIn: ["Linbudu", "Linbudu111"],
         // in: [],
         // lte gt gte
         // lt: "",

@@ -54,14 +54,14 @@ async function main() {
 
     const value1 = await ValueModel.create({
       key: key1.key,
-      value: "林不渡",
+      value: "Linbudu",
     });
 
     console.log("value1: ", value1);
 
     const value2 = await ValueModel.create({
       key: key2.key,
-      value: "林不渡",
+      value: "Linbudu",
     });
 
     console.log("value2: ", value2);
