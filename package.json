@@ -12,7 +12,8 @@
     "dev:advanced": "pnpm run dev --filter='./src/multi-models-advanced'",
     "_dev:multi-client": "pnpm run dev --filter='./src/multi-clients'",
     "dev:with-typeorm": "pnpm run dev --filter='./src/with-typeorm'",
-    "dev:graphql": "pnpm run dev --filter='./src/typegraphql-apollo-server'"
+    "dev:graphql": "pnpm run dev --filter='./src/typegraphql-apollo-server'",
+    "test:graphql": "pnpm run test --filter='./src/typegraphql-apollo-server'"
   },
   "repository": {
     "type": "git",

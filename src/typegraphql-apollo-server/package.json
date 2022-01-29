@@ -8,9 +8,10 @@
     "studio": "prisma studio",
     "gen:code": "graphql-codegen --config codegen.yml",
     "gen:genql": "genql --endpoint http://localhost:5999/graphql --output generated/genql",
-    "test:graphql": "pnpm generate && pnpm seed && jest --forceExit"
+    "test": "pnpm generate && pnpm seed && jest --forceExit"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.8",
     "@genql/runtime": "^2.9.0",
     "@prisma/client": "^3.8.1",
     "apollo-server": "^3.6.2",

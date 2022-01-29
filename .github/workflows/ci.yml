@@ -6,57 +6,45 @@ on:
   pull_request:
     branches: [master, main]
 
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+  HUSKY: 0 # Bypass husky commit hook for CI
+
 jobs:
   server-job:
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [12.x, 14.x, 16.x]
         os: [ubuntu-latest, macOS-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
 
+      - name: Setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.x
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Deps Installation
+        run: pnpm install --no-frozen-lockfile
 
-      # - name: Cache yarn install
-      #   uses: actions/cache@v1
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
-
-      - name: Cache node_modules
-        id: cache-node-modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
-
-      - name: Install Dependencies
-        # if: steps.yarn-cache.outputs.cache-hit != 'true'
-        if: steps.cache-yarn-cache.outputs.cache-hit != 'true' || steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn
-
-      - name: Generate Client
-        run: yarn gen:client:ci
-
-      - name: Compile & Init
-        run: yarn build
-
-      - name: Invoke
-        run: yarn invoke
+      - name: Run
+        run: pnpm start
 
       - name: Test(GraphQL Only)
-        run: yarn test:graphql
+        run: pnpm test:graphql
