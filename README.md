@@ -9,6 +9,8 @@
 
 ## Getting Started
 
+If you got any troubles running commands below, add `DEBUG=*` as command prefix to see internal logs.
+
 ```bash
 pnpm install
 
