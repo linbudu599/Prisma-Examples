@@ -1,0 +1,12 @@
+{
+  "name": "prisma-with-multi-models",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "generate": "prisma db push --force-reset --accept-data-loss"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.8.1",
+    "prisma": "^3.8.1"
+  }
+}

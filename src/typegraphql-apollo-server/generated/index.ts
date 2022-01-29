@@ -3,11 +3,12 @@ import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from '
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -19,16 +20,94 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type BatchPayload = {
+  __typename?: 'BatchPayload';
+  count: Scalars['Int'];
+};
+
+export type CreateTodoInput = {
+  content?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+  type?: InputMaybe<Scalars['String']>;
+  userId: Scalars['Int'];
+};
+
+export type CreateUserInput = {
+  name: Scalars['String'];
+  nickName?: InputMaybe<Scalars['String']>;
+};
+
+/** Todo Item Type */
+export enum ItemType {
+  Bug = 'BUG',
+  Feature = 'FEATURE',
+  Idea = 'IDEA',
+  Life = 'LIFE'
+}
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  CreateTodo?: Maybe<TodoItem>;
+  CreateUser: User;
+  DeleteTodoById?: Maybe<TodoItem>;
+  DeleteUser: User;
+  DeleteUserTodos: BatchPayload;
+  MutateTodoStatus?: Maybe<TodoItem>;
+  UpdateTodo?: Maybe<TodoItem>;
+  UpdateUser: User;
+};
+
+
+export type MutationCreateTodoArgs = {
+  createParams: CreateTodoInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  createParams: CreateUserInput;
+};
+
+
+export type MutationDeleteTodoByIdArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationDeleteUserArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationDeleteUserTodosArgs = {
+  userId: Scalars['Int'];
+};
+
+
+export type MutationMutateTodoStatusArgs = {
+  id: Scalars['Int'];
+  status: Scalars['Boolean'];
+};
+
+
+export type MutationUpdateTodoArgs = {
+  updateParams: UpdateTodoInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  updateParams: UpdateUserInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   QueryAllTodos: Array<TodoItem>;
+  QueryAllUsers: Array<User>;
   QueryTodoById?: Maybe<TodoItem>;
   QueryTodoByString: Array<TodoItem>;
   QueryTodoByTypes: Array<TodoItem>;
-  QueryUserTodos: Array<TodoItem>;
-  QueryAllUsers: Array<User>;
   QueryUserById?: Maybe<User>;
   QueryUserByString?: Maybe<Array<User>>;
+  QueryUserTodos: Array<TodoItem>;
 };
 
 
@@ -47,11 +126,6 @@ export type QueryQueryTodoByTypesArgs = {
 };
 
 
-export type QueryQueryUserTodosArgs = {
-  id: Scalars['Int'];
-};
-
-
 export type QueryQueryUserByIdArgs = {
   id: Scalars['Int'];
 };
@@ -61,17 +135,35 @@ export type QueryQueryUserByStringArgs = {
   str: Scalars['String'];
 };
 
+
+export type QueryQueryUserTodosArgs = {
+  id: Scalars['Int'];
+};
+
 export type TodoItem = {
   __typename?: 'TodoItem';
-  id: Scalars['ID'];
-  title: Scalars['String'];
   content?: Maybe<Scalars['String']>;
-  finished: Scalars['Boolean'];
-  type: Scalars['String'];
+  createdAt: Scalars['Timestamp'];
   creator?: Maybe<User>;
   creatorId?: Maybe<Scalars['Int']>;
-  createdAt: Scalars['Timestamp'];
+  finished: Scalars['Boolean'];
+  id: Scalars['ID'];
+  title: Scalars['String'];
+  type: Scalars['String'];
   updatedAt: Scalars['Timestamp'];
+};
+
+export type UpdateTodoInput = {
+  content?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
+  title?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type UpdateUserInput = {
+  id: Scalars['Int'];
+  name?: InputMaybe<Scalars['String']>;
+  nickName?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
@@ -82,193 +174,52 @@ export type User = {
   todos?: Maybe<Array<TodoItem>>;
 };
 
+export type TodoFieldsFragment = { __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined };
 
-/** Todo Item Type */
-export enum ItemType {
-  Life = 'LIFE',
-  Feature = 'FEATURE',
-  Bug = 'BUG',
-  Idea = 'IDEA'
-}
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  MutateTodoStatus?: Maybe<TodoItem>;
-  CreateTodo?: Maybe<TodoItem>;
-  UpdateTodo?: Maybe<TodoItem>;
-  DeleteTodoById?: Maybe<TodoItem>;
-  DeleteUserTodos: BatchPayload;
-  CreateUser: User;
-  UpdateUser: User;
-  DeleteUser: User;
-};
-
-
-export type MutationMutateTodoStatusArgs = {
-  status: Scalars['Boolean'];
-  id: Scalars['Int'];
-};
-
-
-export type MutationCreateTodoArgs = {
-  createParams: CreateTodoInput;
-};
-
-
-export type MutationUpdateTodoArgs = {
-  updateParams: UpdateTodoInput;
-};
-
-
-export type MutationDeleteTodoByIdArgs = {
-  id: Scalars['Int'];
-};
-
-
-export type MutationDeleteUserTodosArgs = {
-  userId: Scalars['Int'];
-};
-
-
-export type MutationCreateUserArgs = {
-  createParams: CreateUserInput;
-};
-
-
-export type MutationUpdateUserArgs = {
-  updateParams: UpdateUserInput;
-};
-
-
-export type MutationDeleteUserArgs = {
-  id: Scalars['Int'];
-};
-
-export type CreateTodoInput = {
-  title: Scalars['String'];
-  userId: Scalars['Int'];
-  content?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type UpdateTodoInput = {
-  id: Scalars['Int'];
-  title?: Maybe<Scalars['String']>;
-  content?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-};
-
-export type BatchPayload = {
-  __typename?: 'BatchPayload';
-  count: Scalars['Int'];
-};
-
-export type CreateUserInput = {
-  name: Scalars['String'];
-  nickName?: Maybe<Scalars['String']>;
-};
-
-export type UpdateUserInput = {
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-  nickName?: Maybe<Scalars['String']>;
-};
-
-export type TodoFieldsFragment = (
-  { __typename?: 'TodoItem' }
-  & Pick<TodoItem, 'id' | 'title' | 'content' | 'type' | 'creatorId'>
-  & { creator?: Maybe<(
-    { __typename?: 'User' }
-    & UserFragmentFieldsFragment
-  )> }
-);
-
-export type UserFragmentFieldsFragment = (
-  { __typename?: 'User' }
-  & Pick<User, 'id' | 'name' | 'nickName'>
-);
+export type UserFragmentFieldsFragment = { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined };
 
 export type QueryAllTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type QueryAllTodosQuery = (
-  { __typename?: 'Query' }
-  & { QueryAllTodos: Array<(
-    { __typename?: 'TodoItem' }
-    & TodoFieldsFragment
-  )> }
-);
+export type QueryAllTodosQuery = { __typename?: 'Query', QueryAllTodos: Array<{ __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined }> };
 
 export type QueryTodoByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type QueryTodoByIdQuery = (
-  { __typename?: 'Query' }
-  & { QueryTodoById?: Maybe<(
-    { __typename?: 'TodoItem' }
-    & TodoFieldsFragment
-  )> }
-);
+export type QueryTodoByIdQuery = { __typename?: 'Query', QueryTodoById?: { __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined } | null | undefined };
 
 export type QueryTodoByTypesQueryVariables = Exact<{
   type: ItemType;
 }>;
 
 
-export type QueryTodoByTypesQuery = (
-  { __typename?: 'Query' }
-  & { QueryTodoByTypes: Array<(
-    { __typename?: 'TodoItem' }
-    & TodoFieldsFragment
-  )> }
-);
+export type QueryTodoByTypesQuery = { __typename?: 'Query', QueryTodoByTypes: Array<{ __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined }> };
 
 export type QueryTodoByStringQueryVariables = Exact<{
   str: Scalars['String'];
 }>;
 
 
-export type QueryTodoByStringQuery = (
-  { __typename?: 'Query' }
-  & { QueryTodoByString: Array<(
-    { __typename?: 'TodoItem' }
-    & TodoFieldsFragment
-  )> }
-);
+export type QueryTodoByStringQuery = { __typename?: 'Query', QueryTodoByString: Array<{ __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined }> };
 
 export type QueryUserTodosQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type QueryUserTodosQuery = (
-  { __typename?: 'Query' }
-  & { QueryUserTodos: Array<(
-    { __typename?: 'TodoItem' }
-    & TodoFieldsFragment
-  )> }
-);
+export type QueryUserTodosQuery = { __typename?: 'Query', QueryUserTodos: Array<{ __typename?: 'TodoItem', id: string, title: string, content?: string | null | undefined, type: string, creatorId?: number | null | undefined, creator?: { __typename?: 'User', id: string, name: string, nickName?: string | null | undefined } | null | undefined }> };
 
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -282,7 +233,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -329,61 +280,81 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  TodoItem: ResolverTypeWrapper<TodoItem>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  BatchPayload: ResolverTypeWrapper<BatchPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  User: ResolverTypeWrapper<User>;
-  Timestamp: ResolverTypeWrapper<Scalars['Timestamp']>;
+  CreateTodoInput: CreateTodoInput;
+  CreateUserInput: CreateUserInput;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   ItemType: ItemType;
   Mutation: ResolverTypeWrapper<{}>;
-  CreateTodoInput: CreateTodoInput;
+  Query: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Timestamp: ResolverTypeWrapper<Scalars['Timestamp']>;
+  TodoItem: ResolverTypeWrapper<TodoItem>;
   UpdateTodoInput: UpdateTodoInput;
-  BatchPayload: ResolverTypeWrapper<BatchPayload>;
-  CreateUserInput: CreateUserInput;
   UpdateUserInput: UpdateUserInput;
+  User: ResolverTypeWrapper<User>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
-  Int: Scalars['Int'];
-  String: Scalars['String'];
-  TodoItem: TodoItem;
-  ID: Scalars['ID'];
-  Boolean: Scalars['Boolean'];
-  User: User;
-  Timestamp: Scalars['Timestamp'];
-  Mutation: {};
-  CreateTodoInput: CreateTodoInput;
-  UpdateTodoInput: UpdateTodoInput;
   BatchPayload: BatchPayload;
+  Boolean: Scalars['Boolean'];
+  CreateTodoInput: CreateTodoInput;
   CreateUserInput: CreateUserInput;
+  ID: Scalars['ID'];
+  Int: Scalars['Int'];
+  Mutation: {};
+  Query: {};
+  String: Scalars['String'];
+  Timestamp: Scalars['Timestamp'];
+  TodoItem: TodoItem;
+  UpdateTodoInput: UpdateTodoInput;
   UpdateUserInput: UpdateUserInput;
+  User: User;
+};
+
+export type BatchPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchPayload'] = ResolversParentTypes['BatchPayload']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  CreateTodo?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'createParams'>>;
+  CreateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'createParams'>>;
+  DeleteTodoById?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationDeleteTodoByIdArgs, 'id'>>;
+  DeleteUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
+  DeleteUserTodos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserTodosArgs, 'userId'>>;
+  MutateTodoStatus?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationMutateTodoStatusArgs, 'id' | 'status'>>;
+  UpdateTodo?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationUpdateTodoArgs, 'updateParams'>>;
+  UpdateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'updateParams'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   QueryAllTodos?: Resolver<Array<ResolversTypes['TodoItem']>, ParentType, ContextType>;
+  QueryAllUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   QueryTodoById?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<QueryQueryTodoByIdArgs, 'id'>>;
   QueryTodoByString?: Resolver<Array<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<QueryQueryTodoByStringArgs, 'str'>>;
   QueryTodoByTypes?: Resolver<Array<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<QueryQueryTodoByTypesArgs, 'type'>>;
-  QueryUserTodos?: Resolver<Array<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<QueryQueryUserTodosArgs, 'id'>>;
-  QueryAllUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   QueryUserById?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryQueryUserByIdArgs, 'id'>>;
   QueryUserByString?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<QueryQueryUserByStringArgs, 'str'>>;
+  QueryUserTodos?: Resolver<Array<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<QueryQueryUserTodosArgs, 'id'>>;
 };
 
+export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
+  name: 'Timestamp';
+}
+
 export type TodoItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['TodoItem'] = ResolversParentTypes['TodoItem']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  finished?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   creatorId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  finished?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -396,41 +367,15 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Timestamp'], any> {
-  name: 'Timestamp';
-}
-
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  MutateTodoStatus?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationMutateTodoStatusArgs, 'status' | 'id'>>;
-  CreateTodo?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'createParams'>>;
-  UpdateTodo?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationUpdateTodoArgs, 'updateParams'>>;
-  DeleteTodoById?: Resolver<Maybe<ResolversTypes['TodoItem']>, ParentType, ContextType, RequireFields<MutationDeleteTodoByIdArgs, 'id'>>;
-  DeleteUserTodos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserTodosArgs, 'userId'>>;
-  CreateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'createParams'>>;
-  UpdateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'updateParams'>>;
-  DeleteUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
-};
-
-export type BatchPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchPayload'] = ResolversParentTypes['BatchPayload']> = {
-  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = any> = {
+  BatchPayload?: BatchPayloadResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Timestamp?: GraphQLScalarType;
   TodoItem?: TodoItemResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
-  Timestamp?: GraphQLScalarType;
-  Mutation?: MutationResolvers<ContextType>;
-  BatchPayload?: BatchPayloadResolvers<ContextType>;
 };
 
-
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 export const UserFragmentFieldsFragmentDoc = gql`
     fragment UserFragmentFields on User {
@@ -636,4 +581,4 @@ export type QueryUserTodosQueryResult = Apollo.QueryResult<QueryUserTodosQuery, 
 };
       export default result;
     
-// The file generated on: 2021.03.22 11:03:84 am-
+// The file generated on: 2022.01.29 11:01:97 am-

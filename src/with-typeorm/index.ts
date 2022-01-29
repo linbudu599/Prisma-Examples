@@ -6,21 +6,17 @@ import { createConnection } from "typeorm";
 
 import { ValueEntity } from "./value.entity";
 
-import { PrismaKey, PrismaClient } from "./prisma/client";
+import { PrismaClient } from "./prisma/client";
 
 dotenv.config();
 
 const prisma = new PrismaClient();
 
-const IS_PROD = process.env.NODE_ENV === "prod";
-
 async function main() {
   // Setup TypeORM Connection
   const connection = await createConnection({
     type: "sqlite",
-    database: IS_PROD
-      ? "./dist/src/with-typeorm/typeorm-value.sqlite"
-      : "./src/with-typeorm/typeorm-value.sqlite",
+    database: "./typeorm-value.sqlite",
     entities: [ValueEntity],
     synchronize: true,
     dropSchema: true,

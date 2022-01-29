@@ -17,7 +17,7 @@ export interface Query {
     QueryAllUsers: User[]
     QueryUserById?: User
     QueryUserByString?: User[]
-    __typename?: 'Query'
+    __typename: 'Query'
 }
 
 export interface TodoItem {
@@ -30,7 +30,7 @@ export interface TodoItem {
     creatorId?: Scalars['Int']
     createdAt: Scalars['Timestamp']
     updatedAt: Scalars['Timestamp']
-    __typename?: 'TodoItem'
+    __typename: 'TodoItem'
 }
 
 export interface User {
@@ -38,7 +38,7 @@ export interface User {
     name: Scalars['String']
     nickName?: Scalars['String']
     todos?: TodoItem[]
-    __typename?: 'User'
+    __typename: 'User'
 }
 
 
@@ -54,12 +54,12 @@ export interface Mutation {
     CreateUser: User
     UpdateUser: User
     DeleteUser: User
-    __typename?: 'Mutation'
+    __typename: 'Mutation'
 }
 
 export interface BatchPayload {
     count: Scalars['Int']
-    __typename?: 'BatchPayload'
+    __typename: 'BatchPayload'
 }
 
 export interface QueryRequest{

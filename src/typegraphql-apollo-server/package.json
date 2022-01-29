@@ -1,0 +1,42 @@
+{
+  "name": "prisma-with-graphql",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only server.ts",
+    "generate": "prisma db push --force-reset --accept-data-loss",
+    "seed": "prisma db seed",
+    "gen:code": "graphql-codegen --config codegen.yml",
+    "gen:genql": "genql --endpoint http://localhost:5999/graphql --output generated/genql",
+    "test:graphql": "pnpm generate && pnpm seed && jest --forceExit"
+  },
+  "dependencies": {
+    "@genql/runtime": "^2.9.0",
+    "@prisma/client": "^3.8.1",
+    "apollo-server": "^3.6.2",
+    "apollo-server-core": "^3.6.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "graphql": "^15.5.3",
+    "prisma": "^3.8.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "devDependencies": {
+    "@genql/cli": "^2.9.0",
+    "@graphql-codegen/add": "^3.1.1",
+    "@graphql-codegen/cli": "^2.4.0",
+    "@graphql-codegen/fragment-matcher": "^3.2.1",
+    "@graphql-codegen/introspection": "^2.1.1",
+    "@graphql-codegen/time": "^3.1.1",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.4",
+    "@graphql-codegen/typescript-resolvers": "^2.4.3",
+    "apollo-server-testing": "^2.25.3",
+    "chalk": "^4.1.2",
+    "typegraphql-prisma": "^0.18.4"
+  }
+}

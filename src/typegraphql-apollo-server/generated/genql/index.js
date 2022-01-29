@@ -6,7 +6,7 @@ const {
 } = require('@genql/runtime')
 var typeMap = linkTypeMap(require('./types.cjs'))
 
-var version = '2.5.0'
+var version = '2.9.0'
 assertSameVersion(version)
 
 module.exports.version = version
@@ -23,6 +23,13 @@ module.exports.createClient = function(options) {
     optionsCopy[name] = options[name]
   }
   return createClientOriginal(optionsCopy)
+}
+
+module.exports.enumItemType = {
+  LIFE: 'LIFE',
+  FEATURE: 'FEATURE',
+  BUG: 'BUG',
+  IDEA: 'IDEA',
 }
 
 module.exports.generateQueryOp = function(fields) {
