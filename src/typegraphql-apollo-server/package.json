@@ -2,9 +2,10 @@
   "name": "prisma-with-graphql",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only server.ts",
+    "dev": "pnpm generate && pnpm seed && ts-node-dev --respawn --transpile-only server.ts",
     "generate": "prisma db push --force-reset --accept-data-loss",
     "seed": "prisma db seed",
+    "studio": "prisma studio",
     "gen:code": "graphql-codegen --config codegen.yml",
     "gen:genql": "genql --endpoint http://localhost:5999/graphql --output generated/genql",
     "test:graphql": "pnpm generate && pnpm seed && jest --forceExit"

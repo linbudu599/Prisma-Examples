@@ -2,7 +2,8 @@
   "name": "prisma-with-multi-models",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "dev": "pnpm generate && ts-node-dev --respawn --transpile-only index.ts",
+    "start": "pnpm generate && ts-node-dev --transpile-only index.ts",
     "generate": "prisma db push --force-reset --accept-data-loss"
   },
   "dependencies": {

@@ -104,7 +104,7 @@ async function clear() {
 
 (async () => {
   const createRes = await createTodo(
-    `Learn Prisma2 and take deep breath for ${Math.floor(
+    `Learn Prisma3 and take deep breath for ${Math.floor(
       Math.random() * 50
     )} times`,
     "Oops"

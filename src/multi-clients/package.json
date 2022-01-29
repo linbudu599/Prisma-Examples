@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "_start": "pnpm generate && ts-node-dev --transpile-only index.ts",
     "generate": "pnpm generate:key && pnpm generate:value",
     "generate:key": "prisma db push --schema=./prisma-key/schema.prisma --force-reset --accept-data-loss",
     "generate:value": "prisma db push  --schema=./prisma-value/schema.prisma --force-reset --accept-data-loss"

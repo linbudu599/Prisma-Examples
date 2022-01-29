@@ -2,11 +2,14 @@
   "name": "prisma-with-typeorm",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "dev": "pnpm generate && ts-node-dev --respawn --transpile-only index.ts",
+    "start": "pnpm generate && ts-node-dev --transpile-only index.ts",
     "generate": "prisma db push --force-reset --accept-data-loss"
   },
   "dependencies": {
     "@prisma/client": "^3.8.1",
-    "prisma": "^3.8.1"
+    "prisma": "^3.8.1",
+    "sqlite3": "^5.0.2",
+    "typeorm": "^0.2.41"
   }
 }
