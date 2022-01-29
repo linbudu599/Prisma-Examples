@@ -1,6 +1,6 @@
 {
-  "name": "prisma-article-example",
-  "description": "Prisma: 下一代ORM, 不仅仅是ORM Demo 仓库",
+  "name": "prisma-example",
+  "description": "Prisma examples",
   "version": "1.0.0",
   "scripts": {
     "reset": "rimraf -rf ./**/prisma/client ./**/*.sqlite ./**/*.sqlite-journal",

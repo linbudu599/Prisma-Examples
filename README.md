@@ -1,13 +1,10 @@
 # Prisma-Examples
 
-![prisma](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/prisma)
-
-![prisma-client](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/@prisma/client)
+![prisma](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/prisma) ![prisma-client](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/@prisma/client)
 
 ## Left Targets
 
 - Example with MongoDB
-- Example with Nexus
 - Example with Prisma Data Platform
 
 ## Getting Started
