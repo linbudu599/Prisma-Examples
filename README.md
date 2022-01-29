@@ -1,11 +1,11 @@
 # Prisma-Examples
 
-[**简体中文(Outdated, please follow current README content)**](./README.zh-CN.md) | **English**
+![prisma](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/prisma)
+
+![prisma-client](https://img.shields.io/github/package-json/dependency-version/linbudu599/Prisma-Article-Example/@prisma/client)
 
 ## Left Targets
 
-- Migrate to pnpm workspace
-- Bump Prisma version
 - Example with MongoDB
 - Example with Nexus
 - Example with Prisma Data Platform
@@ -20,23 +20,24 @@ pnpm install
 pnpm install prisma -g
 
 # run all examples in a single command!
-pnpm flow
+pnpm start
 
 # avaliable examples:
 
 # single model
-cd single-model
- # multi models & relations
-cd multi-models
- # advanced multi models example
-cd multi-models-advanced
+pnpm dev:single
+
+# multi models & relations
+pnpm dev:multi
+
+# advanced multi models example
+pnpm dev:advanced
+
 # GraphQL example(TypeGraphQL + Apollo-Server)
-cd typegraphql-apollo-server
-# multi prisma client example
-cd multi-clients
-# with TypeORM / TypeGoose
-cd with-typeorm
-cd with-typegoose
+pnpm dev:graphql
+
+# with TypeORM
+pnpm dev:with-typeorm
 
 # generate Prisma Client for all examples
 pnpm gen:client
@@ -56,7 +57,7 @@ prisma migrate
 prisma introspect
 
 # run test cases（GraphQL example）
-pnpm test
+pnpm test:graphql
 ```
 
 ## Advanced Multi-Models Example
@@ -83,21 +84,17 @@ pnpm test
 - Test:
   - database in GraphQL example will be reset before running test cases.
 
-## Multi-Clients
+<!-- ## Multi-Clients
 
 The design of Prisma Client enables you to generate client from various schemas(different databse type / different database connection / different feature configuration / ...)
 
-Check [Multi-Clients](src/multi-clients/index.ts) for details。
+Check [Multi-Clients](src/multi-clients/index.ts) for details。 -->
 
 ## With Other ORMs
 
 ### With TypeORM(SQLite + SQLite)
 
 [Example](src/with-typeorm/index.ts)
-
-### With TypeGoose(SQLite + MongoDB)
-
-[Example](src/with-typegoose/index.ts)
 
 ## With NestJS
 
@@ -197,3 +194,7 @@ Check [Multi-Clients](src/multi-clients/index.ts) for details。
     }
   }
   ```
+
+## Unit Test
+
+- see [prisma-unit-test](./prisma-unit-test) folder.
