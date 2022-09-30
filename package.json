@@ -27,7 +27,7 @@
   "homepage": "https://github.com/linbudu599/Prisma-Article-Example#readme",
   "dependencies": {
     "@prisma/client": "3.8.1",
-    "dotenv": "^14.3.2",
+    "dotenv": "^16.0.3",
     "pg": "^8.7.1",
     "prisma": "3.8.1",
     "ts-node-dev": "^1.1.8",
